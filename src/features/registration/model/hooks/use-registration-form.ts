@@ -4,12 +4,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registrationSchema } from "../validation/registration-schema";
 import { userRegistrationThunk } from "@/features/user/thunk";
+import type { RegistrationFormData } from "../types";
+import { notifyService } from "@/shared/services";
+
+const { notifyError, notifySuccess } = notifyService
 
 export const useRegistrationForm = () => {
   const [files, setFiles] = useState<File[]>([]);
   const dispatch = useAppDispatch();
 
-  const form = useForm({
+  const form = useForm<RegistrationFormData>({
     resolver: yupResolver(registrationSchema),
     defaultValues: {
       username: '',
@@ -45,13 +49,22 @@ export const useRegistrationForm = () => {
   }
 
   const onSubmit = async (data: any) => {
-    await dispatch(userRegistrationThunk({ data, files }))
+    try {
+      await dispatch(userRegistrationThunk({ data, files }))
+    } catch (error: any) {
+      notifyError(error.data.message)
+    }
+  }
+
+  const handleRegistrationSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    return form.handleSubmit(onSubmit)(e);
   }
 
   return {
     form,
     handleFileChange,
     files,
-    onSubmit
+    onSubmit: handleRegistrationSubmit
   }
 }

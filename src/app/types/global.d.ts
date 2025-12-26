@@ -1,4 +1,4 @@
-import type { TelegramWebApp } from "@/entities/telegram/models";
+import type { TelegramWebApp } from "@entities/telegram";
 
 declare global {
   interface Window {

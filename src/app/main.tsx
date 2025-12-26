@@ -8,8 +8,8 @@ import { RouterProvider } from 'react-router-dom'
 import { router } from './router'
 import { Provider } from 'react-redux'
 import { store } from '@/shared/api/store'
-import { getTelegram } from '@/features/telegram/services/get-telegram'
-import { checkAuthorizationAsyncThunk } from '@/features/authentication/thunks/authentication'
+import { getTelegram } from '@/features/telegram/model/services/get-telegram'
+import { checkAuthorizationAsyncThunk } from '@/features/authentication'
 import { ToastContainer } from 'react-toastify'
 
 const tg = getTelegram();

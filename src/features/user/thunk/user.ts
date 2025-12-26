@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { userRegistrationApi } from "../api/user-registration";
-import type { RegistrationRequest } from "@/entities/user/models";
+import type { RegistrationRequest } from "@/entities/user";
 import { notifyService } from "@/shared/services";
 import { parsedUserService } from "@/entities/user/services";
 

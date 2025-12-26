@@ -1,5 +1,5 @@
 import { Card } from "@/shared/components/ui/card";
-import { useRef, type ChangeEvent, type FC } from "react";
+import { useRef, type FC } from "react";
 import { RegistrationFormHeader } from "../form-header";
 import { Camera, Upload } from "lucide-react";
 import type { RegistrationPhotoProps } from "@/shared/lib/react-hook-form";

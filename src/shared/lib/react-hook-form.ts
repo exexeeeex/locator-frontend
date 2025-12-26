@@ -1,4 +1,4 @@
-import type { RegistrationFormData } from "@/features/registration/model/validation/registration-schema"
+import type { RegistrationFormData } from "@/features/registration/model/types"
 import type { Control, FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form"
 
 export type RegistrationFormProps = {
@@ -13,5 +13,5 @@ export type RegistrationMainProps = RegistrationFormProps;
 export type RegistrationPhotoProps = {
   files: File[];
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onRemoveFile: (fileName: string) => void
-}
+};
+

@@ -1,5 +1,5 @@
 import { useWatch, type Control } from "react-hook-form";
-import type { RegistrationFormData } from "../validation/registration-schema";
+import type { RegistrationFormData } from "../types";
 
 export const useRegistrationMain = (control: Control<RegistrationFormData>) => {
   const gender = useWatch({

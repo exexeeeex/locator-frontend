@@ -1,9 +1,8 @@
-import { useRegistrationForm } from "@/features/registration"
+import { useRegistrationForm } from "@features/registration"
 import { RegistrationMain } from "./main-form";
 import { RegistrationPhoto } from "./photo-upload";
-import { fi } from "react-day-picker/locale";
 import { RegistrationPrioritySelector } from "./priority-selector";
-import { Button } from "@/shared/components/ui/button";
+import { Button } from "@shared/components/ui/button";
 
 export const RegistrationForm = () => {
   const { form, handleFileChange, files, onSubmit } = useRegistrationForm()
@@ -19,7 +18,7 @@ export const RegistrationForm = () => {
         setValue={form.setValue}/>
       <RegistrationPhoto 
         files={files}
-        onFileChange={handleFileChange}/>
+        onFileChange={handleFileChange} />
       <RegistrationPrioritySelector 
         control={control}
         setValue={form.setValue}/>

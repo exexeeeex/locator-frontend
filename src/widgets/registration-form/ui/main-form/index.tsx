@@ -14,7 +14,7 @@ import type { RegistrationFormProps } from "@/shared/lib/react-hook-form";
 import { useRegistrationMain } from "@/features/registration";
 
 export const RegistrationMain: FC<RegistrationFormProps> = ({ control, register, errors, setValue }) => {
-  const { gender, isMale, isFemale, genderLabel } = useRegistrationMain(control)
+  const { isMale, isFemale } = useRegistrationMain(control)
 
   return (
     <Card className="w-full bg-card border-1 rounded-3xl mb-[30px] border-border p-[20px]">
@@ -111,7 +111,7 @@ export const RegistrationMain: FC<RegistrationFormProps> = ({ control, register,
               onSelect={(date) => field.onChange(date?.toDateString())}
               toYear={new Date().getFullYear() - 16}
               formatters={{
-                formatCaption: (date, options) => {
+                formatCaption: () => {
                   return '';
                 }
               }}

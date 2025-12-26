@@ -1,6 +1,6 @@
 import baseQueryWithReauth from "@/shared/api/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import type { CityResponse } from "../models/cities-response";
+import type { CityResponse } from "../types/cities-response";
 
 export const cityApi = createApi({
   reducerPath: "cityApi",

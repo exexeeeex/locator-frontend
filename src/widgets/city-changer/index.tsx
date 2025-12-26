@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/shared/components/ui/
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/shared/components/ui/command";
 import { Button } from "@/shared/components/ui/button";
 import { MapPin } from "lucide-react";
-import { useGetCitiesByNameQuery } from "@/entities/city/api";
+import { useGetCitiesByNameQuery } from "@/entities/city/model/api";
 import { useDebounce } from "@/shared/lib/hooks/useDebounce";
 import type { CityResponse } from "@/entities/city/models";
 
