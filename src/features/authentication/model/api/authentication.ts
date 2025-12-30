@@ -1,5 +1,5 @@
-import type { AuthenticationResponse } from "@/entities/authentication";
-import baseQueryWithReauth from "@/shared/api/base-query";
+import type { AuthenticationResponse } from "@/features/authentication";
+import baseQueryWithReauth from "@/shared/lib/api/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 export const authenticationApi = createApi({
@@ -15,6 +15,15 @@ export const authenticationApi = createApi({
           "x-telegram-init-data": data,
         },
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          localStorage.setItem("_auth-data", JSON.stringify(data.tokensPair));
+          localStorage.setItem("_user-data", JSON.stringify(data.user));
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });

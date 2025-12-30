@@ -1,7 +1,3 @@
-import { Main } from '@/widgets/main'
-
-export const MainPage: React.FC = ({}) => {
-  return (
-    <Main />
-  )
-}
+export const MainPage: React.FC = () => {
+  return <h1>hello</h1>;
+};

@@ -1,4 +1,4 @@
-import baseQueryWithReauth from "@/shared/api/base-query";
+import baseQueryWithReauth from "@/shared/lib/api/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { CityResponse } from "../types/cities-response";
 

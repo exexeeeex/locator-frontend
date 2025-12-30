@@ -1,4 +1,4 @@
-import type { TokensResponse } from "@/entities/authentication/models";
+import type { TokensResponse } from "@features/authentication/model/types";
 
 const STORAGE_KEY = "_auth-data";
 

@@ -1,1 +1,1 @@
-export * from './use-user-purpose'
+export { useUserPurpose } from "./use-user-purpose";

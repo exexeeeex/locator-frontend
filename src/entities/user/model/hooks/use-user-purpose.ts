@@ -1,4 +1,4 @@
-import { useGetUserPurposesQuery } from "../../"
+import { useGetUserPurposesQuery } from "../../";
 
 export const useUserPurpose = () => {
   const { data: purposes, isError, isLoading } = useGetUserPurposesQuery();
@@ -6,6 +6,6 @@ export const useUserPurpose = () => {
   return {
     purposes,
     isError,
-    isLoading
-  }
-}
+    isLoading,
+  };
+};

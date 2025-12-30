@@ -1,4 +1,4 @@
-import type { User } from "@/entities/user/models";
+import type { User } from "@/entities/user/";
 import type { TokensResponse } from "./tokens-response";
 
 export interface AuthenticationResponse {

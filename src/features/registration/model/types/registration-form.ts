@@ -2,12 +2,12 @@ export type RegistrationFormData = {
   username: string;
   birthday: Date;
   about: string;
-  gender: 'male' | 'female'; 
+  gender: "male" | "female";
   cityId: string;
   purposeId: string;
   education: string;
   job: string;
-  preferredGender: 'male' | 'female'; 
+  preferredGender: "male" | "female";
   minAge: string;
   maxAge: string;
 };
