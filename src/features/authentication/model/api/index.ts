@@ -1,1 +1,5 @@
-export * from "./authentication";
+export {
+    useLoginMutation,
+    useMeQuery,
+    authenticationApi,
+} from './authentication';

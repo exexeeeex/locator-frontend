@@ -1,82 +1,42 @@
 import {
-  fetchBaseQuery,
-  type BaseQueryFn,
-  type FetchArgs,
-  type FetchBaseQueryError,
-} from "@reduxjs/toolkit/query";
-import { _apiUrl } from "@shared/config";
-import { tokenService } from "..";
-import type { TokensResponse } from "@features/authentication";
+    fetchBaseQuery,
+    type BaseQueryFn,
+    type FetchArgs,
+    type FetchBaseQueryError,
+} from '@reduxjs/toolkit/query';
+import { _apiUrl } from '@shared/config';
+import { getTelegram } from '@/features/telegram/model';
 
-const { get } = tokenService;
 export const baseQuery = fetchBaseQuery({
-  baseUrl: _apiUrl,
-  prepareHeaders: (headers) => {
-    const authData = localStorage.getItem("user-data");
-    let userId = "";
-
-    if (authData) {
-      try {
-        const parsed = JSON.parse(authData);
-        userId = parsed.id || "";
-      } catch (error) {
-        console.error("Error parsing auth data:", error);
-      }
-    }
-
-    headers.set("user-id", userId);
-    const accessToken = get("access");
-    if (!accessToken) return headers;
-    headers.set("Authorization", `Bearer ${accessToken}`);
-    return headers;
-  },
+    baseUrl: _apiUrl,
+    credentials: 'include',
 });
 
+const tg = getTelegram();
+
 const baseQueryWithReauth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
-  // if (
-  //   result.error?.data &&
-  //   typeof result.error.data === "object" &&
-  //   "message" in result.error.data
-  // ) {
-  // }
+    let result = await baseQuery(args, api, extraOptions);
 
-  if (result.error && result.error.status === 401) {
-    const refreshToken = get("refresh");
+    if (result?.error?.status === 401) {
+        if (!tg.initData) return result;
 
-    if (!refreshToken) return result;
+        await baseQuery(
+            {
+                url: 'authentication/telegram',
+                method: 'POST',
+                body: { initData: tg.initData },
+            },
+            api,
+            extraOptions,
+        );
 
-    const refreshResult = await baseQuery(
-      {
-        url: `authentication/refresh-token`,
-        method: "POST",
-        body: { refreshToken: refreshToken },
-      },
-      api,
-      extraOptions
-    );
-
-    if (refreshResult.data) {
-      const newAccessToken = (refreshResult.data as TokensResponse).accessToken;
-
-      localStorage.setItem(
-        "_auth-data",
-        JSON.stringify({
-          accessToken: newAccessToken,
-          refreshToken: refreshToken,
-        })
-      );
-
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      window.location.reload();
+        result = await baseQuery(args, api, extraOptions);
     }
-  }
-  return result;
+    return result;
 };
 
 export default baseQueryWithReauth;
