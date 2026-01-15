@@ -1,1 +1,1 @@
-export { MyProfile, MyProfileAvatar, MyProfileBody } from "./ui";
+export { MyProfile, MyProfileAvatar } from "./ui";

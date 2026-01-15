@@ -1,17 +1,19 @@
 import { useGetMyProfileQuery } from "..";
 
 export const useMyProfile = () => {
-  const query = useGetMyProfileQuery();
+	return useGetMyProfileQuery(undefined, {
+		selectFromResult: ({ data, error, isLoading }) => ({
+			profile: data,
+			error,
+			isLoading,
 
-  return {
-    profile: query.data,
-    error: query.error,
-    refetch: query.refetch,
-    isLoading: query.isLoading,
-
-    city: query.data?.city,
-    gender: query.data?.gender.name,
-    userMedias: query.data?.userMedias,
-    purpose: query.data?.purpose,
-  };
+			city: data?.city,
+			gender: data?.gender?.name,
+			userMedias: data?.userMedias,
+			purpose: data?.purpose,
+			userId: data?.userId,
+		}),
+		refetchOnFocus: true,
+		refetchOnMountOrArgChange: true,
+	});
 };

@@ -1,6 +1,8 @@
 export {
-  useGetMyProfileQuery,
-  profileApi,
-  useMyProfile,
-  useUserProfile,
+	useGetMyProfileQuery,
+	profileApi,
+	useMyProfile,
+	useUserProfile,
+	useProfileAbout,
+	useProfileBody,
 } from "./model";
