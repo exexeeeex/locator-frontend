@@ -1,5 +1,14 @@
 import { cn } from "@/shared/lib/utils";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../dialog";
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "../dialog";
 import { Button } from "../button";
 
 type Props = {
@@ -10,16 +19,20 @@ type Props = {
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 
-	className?: string;
-	contentClassName?: string;
-	headerClassName?: string;
-	titleClassName?: string;
-	descriptionClassName?: string;
-	triggerClassName?: string;
+	classNames?: Partial<{
+		container: string;
+		content: string;
+		header: string;
+		title: string;
+		description: string;
+		trigger: string;
+	}>;
 
 	buttonProps: string;
 	action: () => void;
 	closeAction?: () => void;
+
+	disabled?: boolean;
 };
 
 export const Modal: React.FC<Props> = ({
@@ -30,16 +43,13 @@ export const Modal: React.FC<Props> = ({
 	open,
 	onOpenChange,
 
-	className,
-	contentClassName,
-	headerClassName,
-	titleClassName,
-	descriptionClassName,
-	triggerClassName,
+	classNames,
 
 	buttonProps,
 	action,
 	closeAction,
+
+	disabled,
 }) => {
 	return (
 		<Dialog
@@ -48,7 +58,7 @@ export const Modal: React.FC<Props> = ({
 		>
 			<DialogTrigger
 				asChild
-				className={cn(triggerClassName)}
+				className={cn(classNames?.trigger)}
 			>
 				{trigger}
 			</DialogTrigger>
@@ -62,25 +72,42 @@ export const Modal: React.FC<Props> = ({
                         border border-border/40
                         p-6
                     `,
-					contentClassName,
+					classNames?.content,
 				)}
 			>
 				{(title || description) && (
-					<DialogHeader className={cn("items-start gap-1 ", headerClassName)}>
-						{title && <DialogTitle className={cn("text-[17px] font-semibold tracking-tight", titleClassName)}>{title}</DialogTitle>}
+					<DialogHeader
+						className={cn("items-start gap-1 ", classNames?.header)}
+					>
+						{title && (
+							<DialogTitle
+								className={cn(
+									"text-[17px] font-semibold tracking-tight",
+									classNames?.title,
+								)}
+							>
+								{title}
+							</DialogTitle>
+						)}
 
 						{description && (
-							<DialogDescription className={cn("text-[15px] text-muted-foreground leading-relaxed", descriptionClassName)}>
+							<DialogDescription
+								className={cn(
+									"text-[15px] text-muted-foreground leading-relaxed",
+									classNames?.description,
+								)}
+							>
 								{description}
 							</DialogDescription>
 						)}
 					</DialogHeader>
 				)}
 
-				<div className={cn(className)}>{children}</div>
+				<div className={cn(classNames?.content)}>{children}</div>
 
 				<DialogFooter className='flex flex-col gap-3 '>
 					<Button
+						disabled={disabled}
 						onClick={action}
 						className='
                           w-full h-12
@@ -99,7 +126,6 @@ export const Modal: React.FC<Props> = ({
 							className='
                                 w-full h-12
                                 rounded-2xl
-                                bg-muted/40
                                 border-border/40
                                 text-[16px]
                             '

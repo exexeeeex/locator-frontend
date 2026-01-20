@@ -1,3 +1,3 @@
-export { ProfileBody } from "./profile-body";
-export { ProfileAbout } from "./profile-about";
+export { ProfileBody } from "./body";
+export { ProfileAbout } from "./about";
 export { DetailItem } from "./common";

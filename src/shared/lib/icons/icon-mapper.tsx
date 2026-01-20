@@ -1,5 +1,16 @@
 import type { IconType } from "@/shared/types";
-import { User, type LucideIcon, Heart, Flame, AlertCircle, Share2, MapPin, BriefcaseBusiness, GraduationCap } from "lucide-react";
+import {
+	User,
+	type LucideIcon,
+	Heart,
+	Flame,
+	AlertCircle,
+	Share2,
+	MapPin,
+	BriefcaseBusiness,
+	GraduationCap,
+	Settings,
+} from "lucide-react";
 
 export const ICON_MAP: Record<IconType, LucideIcon> = {
 	profile: User,
@@ -10,4 +21,5 @@ export const ICON_MAP: Record<IconType, LucideIcon> = {
 	pin: MapPin,
 	work: BriefcaseBusiness,
 	education: GraduationCap,
+	settings: Settings,
 };

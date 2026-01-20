@@ -2,12 +2,19 @@ import { useUserId } from "@/entities/user/model/hooks";
 import { useProfileAbout } from "@/features/profile/model/hooks";
 import { Card, Icon, Textarea } from "@/shared/components";
 import { Modal } from "@/shared/components";
-import { useProfile } from "../../context";
+import { useProfile } from "../context";
 
 export const ProfileAbout: React.FC = ({}) => {
 	const id = useUserId();
 	const { profile } = useProfile();
-	const { open: openModal, setOpen: setOpenModal } = useProfileAbout();
+	const {
+		open: openModal,
+		setOpen: setOpenModal,
+		register,
+		watch,
+	} = useProfileAbout();
+
+	const aboutValue = watch("about") ?? "";
 
 	if (id !== profile.userId) {
 		return (
@@ -85,11 +92,14 @@ export const ProfileAbout: React.FC = ({}) => {
 				trigger={<div className='hidden' />}
 				title='Введите новый текст'
 				buttonProps={"Применить изменения"}
+				disabled={aboutValue.length < 10}
 				action={function (): void {
 					throw new Error("Function not implemented.");
 				}}
 			>
 				<Textarea
+					{...register("about")}
+					value={aboutValue}
 					className='border border-border/40 rounded-lg'
 					placeholder='Лежу на диване, ничего не делаю..'
 				/>

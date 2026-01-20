@@ -1,16 +1,13 @@
 import { UserLocation } from "@/shared/components";
 import { DetailItem, ProfileAbout } from "../..";
 import { useProfileBody } from "@/features/profile/model/hooks";
-import { useProfile } from "../../context";
+import { useProfile } from "../context";
 
 export const ProfileBody: React.FC = ({}) => {
-	const { profile, error } = useProfile();
+	const { profile } = useProfile();
 	const { username, city } = profile;
 
-	const { age, region, purpose, userAdditional } = useProfileBody(
-		profile,
-		error,
-	);
+	const { age, region, details } = useProfileBody(profile);
 
 	return (
 		<div className='pt-20 px-6 pb-6'>
@@ -28,21 +25,15 @@ export const ProfileBody: React.FC = ({}) => {
 			</div>
 
 			<div className='mt-6 flex flex-col gap-2.5'>
-				<DetailItem
-					icon={"education"}
-					title={"Образование"}
-					value={userAdditional.education}
-				/>
-				<DetailItem
-					icon={"work"}
-					title='Место работы'
-					value={userAdditional.job}
-				/>
-				<DetailItem
-					icon={"heart"}
-					title='Хочу найти'
-					value={purpose}
-				/>
+				<h2 className='font-semibold text-lg'>Дополнительная информация</h2>
+				{details.map((detail) => (
+					<DetailItem
+						key={detail.key}
+						icon={detail.icon}
+						title={detail.label}
+						value={detail.value}
+					/>
+				))}
 			</div>
 		</div>
 	);

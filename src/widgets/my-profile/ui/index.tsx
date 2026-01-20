@@ -2,10 +2,13 @@ import { useMyProfile } from "@/features/profile";
 import { MyProfileHeader } from ".";
 import { ProfileBody } from "@/widgets/profile";
 import { Error } from "@/shared/components";
-import { ProfileProvider } from "@/widgets/profile/context";
+import { ProfileProvider } from "@/widgets/profile/ui/context";
+import { useErrorRedirect } from "@/shared/lib";
 
 export const MyProfile: React.FC = () => {
 	const { profile, error } = useMyProfile();
+
+	useErrorRedirect(error, [{ status: 404, redirectTo: "/registration" }]);
 
 	if (!profile) return <Error message='Профиль не найден' />;
 	if (!profile.city)

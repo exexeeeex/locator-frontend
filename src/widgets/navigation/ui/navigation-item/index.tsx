@@ -3,47 +3,44 @@ import type { NavigationLink } from "../..";
 import { Icon } from "@shared/components";
 
 interface NavigationItemProp {
-  link: NavigationLink;
+	link: NavigationLink;
 }
 
 export const NavigationItem: React.FC<NavigationItemProp> = ({ link }) => {
-  return (
-    <NavLink
-      to={`/${link.linkTo}`}
-      className={({ isActive, isPending }) =>
-        `
-        group h-[calc(100%-7px)] rounded-lg
-        flex items-center p-2 transition-colors
+	return (
+		<NavLink
+			to={`/${link.linkTo}`}
+			className={({ isActive }) =>
+				`
+        		  flex flex-col items-center justify-center
+        		  w-16 h-14
+        		  rounded-2xl
+        		  transition-all duration-300
+        		  ${
+								isActive
+									? "bg-primary/10 text-primary"
+									: "text-muted-foreground hover:text-foreground"
+							}	
+        		`
+			}
+		>
+			<Icon
+				icon={link.icon}
+				size={24}
+				stroke='currentColor'
+				fill='none'
+				className='transition-transform duration-300 group-hover:scale-105'
+				color={""}
+			/>
 
-        ${isActive ? "text-primary" : "text-muted-foreground"}
-        ${isPending ? "opacity-60" : ""}
-        `
-      }
-    >
-      <div className='flex flex-col items-center gap-1'>
-        <Icon
-          color='currentColor'
-          icon={link.icon}
-          size={24}
-          stroke='currentColor'
-          fill='none'
-          className='
-            transition-colors
-            group-hover:text-primary
-            group-[.active]:text-primary
-          '
-        />
-
-        <p
-          className='
-            text-[12px] font-semibold transition-colors
-            group-hover:text-primary
-            group-[.active]:text-primary
-          '
-        >
-          {link.name}
-        </p>
-      </div>
-    </NavLink>
-  );
+			<span
+				className='
+        		  mt-1 text-[11px] font-medium tracking-tight
+        		  transition-colors
+        		'
+			>
+				{link.name}
+			</span>
+		</NavLink>
+	);
 };

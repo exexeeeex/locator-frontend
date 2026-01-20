@@ -6,4 +6,5 @@ export type IconType =
 	| "share"
 	| "pin"
 	| "work"
-	| "education";
+	| "education"
+	| "settings";

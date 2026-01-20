@@ -15,3 +15,4 @@ export * from "./icon";
 export * from "./user-location";
 export { ImageInput } from "./image-input";
 export { Modal } from "./modal";
+export { DrawerWindow } from "./drawer-window";

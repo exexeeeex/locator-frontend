@@ -1,6 +1,16 @@
 import { type FC } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shared/components/ui/popover";
-import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/shared/components/ui/command";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/shared/components/ui/popover";
+import {
+	Command,
+	CommandEmpty,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from "@/shared/components/ui/command";
 import { Button } from "@/shared/components/ui";
 import { MapPin } from "lucide-react";
 import { useCitySearch } from "@/features/city-search";
@@ -11,7 +21,13 @@ type Props = {
 };
 
 export const CityChanger: FC<Props> = ({ currentCity, onSelectCity }) => {
-	const { isOpenPopover, setIsOpenPopover, searchValue, setSearchValue, searchedCities } = useCitySearch();
+	const {
+		isOpenPopover,
+		setIsOpenPopover,
+		searchValue,
+		setSearchValue,
+		searchedCities,
+	} = useCitySearch();
 
 	return (
 		<Popover
@@ -28,17 +44,18 @@ export const CityChanger: FC<Props> = ({ currentCity, onSelectCity }) => {
                     '
 				>
 					<MapPin size={18} />
-					{searchedCities?.find((c) => c.id === currentCity)?.name ?? "Выбрать город"}
+					{searchedCities?.find((c) => c.id === currentCity)?.name ??
+						"Выбрать город"}
 				</Button>
 			</PopoverTrigger>
 
 			<PopoverContent
 				className='
-        rounded-3xl
-        bg-card/95 backdrop-blur-xl
-        border border-border/40
-        shadow-xl
-      '
+      			  rounded-3xl
+      			  bg-card/95 backdrop-blur-xl
+      			  border border-border/40
+      			  shadow-xl
+      			'
 			>
 				<Command>
 					<CommandInput

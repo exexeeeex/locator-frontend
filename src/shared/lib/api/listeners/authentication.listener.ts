@@ -1,5 +1,5 @@
 import { authenticationApi } from "@/features/authentication";
-import { getTelegram } from "@/features/telegram/model";
+import { getTelegram } from "@/shared/platform/telegram";
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 
 export const authenticationListener = createListenerMiddleware();
@@ -15,8 +15,14 @@ authenticationListener.startListening({
 
 		if (!initData) return;
 
-		await listenerApi.dispatch(authenticationApi.endpoints.login.initiate({ initData }));
+		await listenerApi.dispatch(
+			authenticationApi.endpoints.login.initiate({ initData }),
+		);
 
-		listenerApi.dispatch(authenticationApi.endpoints.me.initiate(undefined, { forceRefetch: true }));
+		listenerApi.dispatch(
+			authenticationApi.endpoints.me.initiate(undefined, {
+				forceRefetch: true,
+			}),
+		);
 	},
 });

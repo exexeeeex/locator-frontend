@@ -1,4 +1,4 @@
-import { getTelegram } from "@/features/telegram/model";
+import { getTelegram } from "@/shared/platform/telegram";
 import baseQueryWithReauth from "@/shared/lib/api/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import type { AuthenticationResponse } from "../types";

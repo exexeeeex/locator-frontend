@@ -1,29 +1,32 @@
 import { getUserAge, type UserProfile } from "@/entities/user";
-import { pick } from "@/shared/services";
-import type { SerializedError } from "@reduxjs/toolkit";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import type { IconType } from "@/shared/types";
 
-export const useProfileBody = (
-	profile: UserProfile,
-	error: FetchBaseQueryError | SerializedError | undefined,
-) => {
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (error) {
-			if ("statusCode" in error) {
-				if (error.statusCode === 404) navigate("/registration");
-			}
-		}
-	}, [error]);
+export const useProfileBody = (profile: UserProfile) => {
+	const allDetails = {
+		job: {
+			value: profile.userAdditional.job,
+			label: "Профессия",
+			icon: "work" as IconType,
+		},
+		education: {
+			value: profile.userAdditional.education,
+			label: "Образование",
+			icon: "education" as IconType,
+		},
+		purpose: {
+			value: profile.purpose.name,
+			label: "Ищу",
+			icon: "heart" as IconType,
+		},
+	};
 
 	return {
-		userAdditional: pick(profile.userAdditional, ["job", "education"]),
+		details: Object.entries(allDetails).map(([key, data]) => ({
+			key,
+			...data,
+		})),
 		city: profile.city,
 		region: profile.city.region,
 		age: getUserAge(profile.birthday ?? ""),
-		purpose: profile.purpose.name,
 	};
 };
