@@ -1,5 +1,5 @@
 import { UserLocation } from "@/shared/components";
-import { DetailItem, ProfileAbout } from "../..";
+import { DetailItem, ProfileAbout, ProfileInterests } from "../..";
 import { useProfileBody } from "@/features/profile/model/hooks";
 import { useProfile } from "../context";
 
@@ -10,7 +10,7 @@ export const ProfileBody: React.FC = ({}) => {
 	const { age, region, details } = useProfileBody(profile);
 
 	return (
-		<div className='pt-20 px-6 pb-6'>
+		<div className='pt-20 pb-6 px-5'>
 			<div className='flex items-end gap-2'>
 				<h2 className='text-2xl font-semibold tracking-tight'>{username}</h2>
 				<span className='text-xl text-muted-foreground font-medium'>
@@ -34,6 +34,10 @@ export const ProfileBody: React.FC = ({}) => {
 						value={detail.value}
 					/>
 				))}
+			</div>
+
+			<div className='mt-6'>
+				<ProfileInterests />
 			</div>
 		</div>
 	);

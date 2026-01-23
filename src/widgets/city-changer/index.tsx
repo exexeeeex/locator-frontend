@@ -51,10 +51,14 @@ export const CityChanger: FC<Props> = ({ currentCity, onSelectCity }) => {
 
 			<PopoverContent
 				className='
+				  bg-linear-to-t from-card/40 to-transparent
+				  backdrop-blur-2xl
+        		  backdrop-saturate-150
       			  rounded-3xl
-      			  bg-card/95 backdrop-blur-xl
       			  border border-border/40
       			  shadow-xl
+				  w-[80vw]
+				  mt-1
       			'
 			>
 				<Command>
@@ -63,7 +67,7 @@ export const CityChanger: FC<Props> = ({ currentCity, onSelectCity }) => {
 						onValueChange={setSearchValue}
 						placeholder='Поиск города'
 					/>
-					<CommandList>
+					<CommandList className='mt-1'>
 						<CommandEmpty>Город не найден</CommandEmpty>
 						{searchedCities?.map((city) => (
 							<CommandItem

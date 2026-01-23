@@ -1,14 +1,32 @@
 import { Card } from "@/shared/components/ui/card";
-import { useRef, type FC } from "react";
+import { useRef } from "react";
 import { RegistrationFormHeader } from "../form-header";
 import { Camera, Upload } from "lucide-react";
-import type { RegistrationPhotoProps } from "@/shared/types";
+import {
+	useRegistrationFormFiles,
+	type RegistrationFormData,
+} from "@/features/registration";
+import { motion } from "framer-motion";
+import { SLIDE_MOTION_PROPS } from "@shared/config";
+import { useFormContext } from "react-hook-form";
 
-export const RegistrationPhoto: FC<RegistrationPhotoProps> = ({ onFileChange, files }) => {
+export const RegistrationPhoto = ({}) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
+	const {
+		setValue,
+		watch,
+		formState: { errors },
+	} = useFormContext<RegistrationFormData>();
+
+	const { files, handleFileChange, handleFileRemove } =
+		useRegistrationFormFiles(setValue, watch);
+
 	return (
-		<>
+		<motion.div
+			key='photo'
+			{...SLIDE_MOTION_PROPS}
+		>
 			<Card
 				className='
                   w-full mb-4 p-6
@@ -44,17 +62,30 @@ export const RegistrationPhoto: FC<RegistrationPhotoProps> = ({ onFileChange, fi
 					<span className='text-sm'>До 6 изображений</span>
 				</div>
 
-				<div className='mt-4 flex flex-[1_1_0%] flex-wrap justify-between gap-3'>
+				<div className='mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4'>
 					{files.map((file, i) => (
-						<img
+						<div
 							key={i}
-							src={URL.createObjectURL(file)}
-							className='
-                              flex-1 h-[120px] w-[120px]
-                              rounded-2xl object-cover
-                              shadow-sm
-                            '
-						/>
+							className='relative aspect-square'
+						>
+							<img
+								src={URL.createObjectURL(file)}
+								className='h-full w-full rounded-2xl object-cover shadow-sm'
+							/>
+
+							<button
+								onClick={() => handleFileRemove(file.name)}
+								type='button'
+								className='
+        						  absolute right-2 top-2
+        						  flex h-6 w-6 items-center justify-center
+        						  rounded-full bg-black/60 text-white
+        						  hover:bg-black/80
+        						'
+							>
+								✕
+							</button>
+						</div>
 					))}
 				</div>
 			</Card>
@@ -65,8 +96,8 @@ export const RegistrationPhoto: FC<RegistrationPhotoProps> = ({ onFileChange, fi
 				multiple
 				accept='image/*'
 				hidden
-				onChange={onFileChange}
+				onChange={handleFileChange}
 			/>
-		</>
+		</motion.div>
 	);
 };

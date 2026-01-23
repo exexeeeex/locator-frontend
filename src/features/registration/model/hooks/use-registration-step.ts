@@ -1,20 +1,30 @@
-import { useState } from 'react';
-import type { RegistrationStep } from '../types';
+import { useState } from "react";
+import type { RegistrationFormData, RegistrationStep } from "../types";
+import { REGISTRATION_STEP_FIELDS } from "../config";
+import type { UseFormTrigger } from "react-hook-form";
 
-export const useRegistrationStep = () => {
-    const [step, setStep] = useState<RegistrationStep>('main');
+export const useRegistrationStep = (
+	trigger: UseFormTrigger<RegistrationFormData>,
+) => {
+	const [step, setStep] = useState<RegistrationStep>("main");
 
-    const nextStep = () => {
-        setStep((prev) =>
-            prev === 'main' ? 'photo' : prev === 'photo' ? 'priority' : prev,
-        );
-    };
+	const nextStep = async () => {
+		const fields = REGISTRATION_STEP_FIELDS[step];
 
-    const prevStep = () => {
-        setStep((prev) =>
-            prev === 'priority' ? 'photo' : prev === 'photo' ? 'main' : prev,
-        );
-    };
+		const isValid = fields.length ? await trigger([...fields]) : true;
 
-    return { step, nextStep, prevStep };
+		if (!isValid) return;
+
+		setStep((prev) =>
+			prev === "main" ? "photo" : prev === "photo" ? "priority" : prev,
+		);
+	};
+
+	const prevStep = () => {
+		setStep((prev) =>
+			prev === "priority" ? "photo" : prev === "photo" ? "main" : prev,
+		);
+	};
+
+	return { step, nextStep, prevStep };
 };

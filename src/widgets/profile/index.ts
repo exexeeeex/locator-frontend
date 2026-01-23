@@ -1,1 +1,1 @@
-export { ProfileAbout, ProfileBody, DetailItem } from "./ui";
+export { ProfileAbout, ProfileBody, DetailItem, ProfileInterests } from "./ui";

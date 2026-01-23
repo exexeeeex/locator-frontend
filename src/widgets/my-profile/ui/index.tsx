@@ -1,6 +1,6 @@
 import { useMyProfile } from "@/features/profile";
 import { MyProfileHeader } from ".";
-import { ProfileBody } from "@/widgets/profile";
+import { ProfileBody, ProfileInterests } from "@/widgets/profile";
 import { Error } from "@/shared/components";
 import { ProfileProvider } from "@/widgets/profile/ui/context";
 import { useErrorRedirect } from "@/shared/lib";

@@ -1,2 +1,2 @@
-export { useGetUserPurposesQuery } from "./user-purpose";
-export { userPurposeApi } from "./user-purpose";
+export { useGetUserPurposesQuery, userPurposeApi } from "./user-purpose";
+export { useGetUserInterestsQuery, userInterestsApi } from "./user-interests";

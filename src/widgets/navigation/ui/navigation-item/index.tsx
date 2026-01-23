@@ -13,32 +13,28 @@ export const NavigationItem: React.FC<NavigationItemProp> = ({ link }) => {
 			className={({ isActive }) =>
 				`
         		  flex flex-col items-center justify-center
-        		  w-16 h-14
-        		  rounded-2xl
-        		  transition-all duration-300
+        		  w-14 h-10
+        		  rounded-full
+        		  transition-all duration-200 ease-out
+		
         		  ${
 								isActive
-									? "bg-primary/10 text-primary"
+									? "bg-primary/15 text-primary"
 									: "text-muted-foreground hover:text-foreground"
-							}	
+							}
         		`
 			}
 		>
 			<Icon
 				icon={link.icon}
-				size={24}
+				size={20}
 				stroke='currentColor'
 				fill='none'
-				className='transition-transform duration-300 group-hover:scale-105'
-				color={""}
+				className='transition-transform duration-200'
+				color=''
 			/>
 
-			<span
-				className='
-        		  mt-1 text-[11px] font-medium tracking-tight
-        		  transition-colors
-        		'
-			>
+			<span className='mt-0.5 text-[10px] font-medium tracking-tight'>
 				{link.name}
 			</span>
 		</NavLink>

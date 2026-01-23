@@ -1,10 +1,15 @@
 export { userDataService, parsedUserService, getUserAge } from "./services";
-export { useUserPurpose } from "./hooks";
-export { useGetUserPurposesQuery, userPurposeApi } from "./api";
+export { useUserPurpose, useUserInterests, useUserId } from "./hooks";
 export {
-  type UserPurpose,
-  type RegistrationRequest,
-  type RegistrationFormValues,
-  type UserProfile,
-  type User,
+	useGetUserPurposesQuery,
+	useGetUserInterestsQuery,
+	userPurposeApi,
+} from "./api";
+export {
+	type UserPurpose,
+	type RegistrationRequest,
+	type RegistrationFormValues,
+	type UserProfile,
+	type User,
+	type UserInterests,
 } from "./types";

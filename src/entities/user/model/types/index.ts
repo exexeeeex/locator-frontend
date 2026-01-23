@@ -5,3 +5,4 @@ export type { RegistrationRequest } from "./registration-request";
 export type { UserProfile } from "./user-profile";
 export type { UserMedia } from "./user-media";
 export type { UserAdditional } from "./user-additional";
+export type { UserInterests } from "./user-interests";

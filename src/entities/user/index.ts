@@ -5,6 +5,11 @@ export {
 	type RegistrationFormValues,
 	type RegistrationRequest,
 	type UserProfile,
+	type UserInterests,
 } from "./model";
-export { userPurposeApi, useGetUserPurposesQuery } from "./model";
-export { useUserPurpose } from "./model";
+export {
+	userPurposeApi,
+	useGetUserPurposesQuery,
+	useGetUserInterestsQuery,
+} from "./model";
+export { useUserPurpose, useUserInterests, useUserId } from "./model";

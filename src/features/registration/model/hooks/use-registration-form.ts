@@ -1,5 +1,4 @@
 import { useAppDispatch } from "@shared/lib/api/store";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registrationSchema } from "../validation/registration-schema";
@@ -11,7 +10,6 @@ import { parseApiError } from "@/shared/lib/error";
 const { notifyError } = notifyService;
 
 export const useRegistrationForm = () => {
-	const [files, setFiles] = useState<File[]>([]);
 	const dispatch = useAppDispatch();
 
 	const form = useForm<RegistrationFormData>({
@@ -24,47 +22,38 @@ export const useRegistrationForm = () => {
 			cityId: "",
 			purposeId: "",
 			education: "Не указано",
+			selectedInterestsIds: ["949d2a02-abe3-4596-bcf4-e770b47bc5a3"],
 			job: "Не указано",
 			preferredGender: "male",
 			minAge: "16",
 			maxAge: "50",
+			files: [],
 		},
 	});
 
-	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (!e.target.files) return;
-
-		const newFiles = Array.from(e.target.files);
-
-		setFiles((prev) => {
-			if (files.length + newFiles.length > 5) return prev;
-			const existingNames = new Set(prev.map((f) => f.name));
-
-			const filtered = newFiles.filter((file) => !existingNames.has(file.name));
-
-			return [...prev, ...filtered];
-		});
-
-		e.target.value = "";
-	};
-
 	const onSubmit = async (data: RegistrationFormData) => {
+		console.log("=== FORM SUBMISSION STARTED ===");
+		console.log("Form data:", data);
+		console.log("Files count:", data.files?.length || 0);
+
 		try {
-			await dispatch(registrationThunk({ data, files }));
+			const result = await dispatch(
+				registrationThunk({
+					data,
+					files: data.files || [],
+				}),
+			);
+			console.log("Dispatch result:", result);
 		} catch (error: unknown) {
+			console.error("Registration error:", error);
 			notifyError(parseApiError(error, "Ошибка регистрации"));
 		}
 	};
 
-	const handleRegistrationSubmit = (e?: React.FormEvent) => {
-		if (e) e.preventDefault();
-		return form.handleSubmit(onSubmit)(e);
-	};
+	const handleRegistrationSubmit = form.handleSubmit(onSubmit);
 
 	return {
 		form,
-		handleFileChange,
-		files,
-		onSubmit: handleRegistrationSubmit,
+		handleRegistrationSubmit,
 	};
 };
