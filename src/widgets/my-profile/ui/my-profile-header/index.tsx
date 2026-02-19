@@ -7,6 +7,7 @@ export const MyProfileHeader: React.FC = () => {
 		<header className='relative'>
 			<div
 				className='
+				  rounded-t-3xl
         		  h-30
         		  bg-linear-to-br
         		  from-primary/90

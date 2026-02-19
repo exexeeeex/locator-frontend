@@ -32,7 +32,7 @@ export const parsedUserService = {
 			},
 			userInterests: {
 				selectedInterestsIds: data.selectedInterestsIds,
-			},
+			}, 
 		};
 	},
 };

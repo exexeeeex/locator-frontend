@@ -12,7 +12,7 @@ export const InterestBadge: React.FC<Props> = ({ name, className }) => {
 			variant={"outline"}
 			className={cn(
 				className,
-				"border-[1.5px] backdrop-blur-3xl backdrop-saturate-180",
+				"border-[1.5px] flex justify-center items-center backdrop-blur-3xl backdrop-saturate-180",
 			)}
 		>
 			<span className='text-[1.1rem]'>{name}</span>

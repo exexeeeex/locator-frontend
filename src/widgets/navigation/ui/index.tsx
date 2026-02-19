@@ -32,7 +32,7 @@ export const Navigation = () => {
         		  shadow-sm
         		'
 			>
-				<ul className='flex h-full items-center justify-between px-4'>
+				<ul className='flex h-full items-center justify-between px-1'>
 					{links.map((link) => (
 						<NavigationItem
 							key={link.id}

@@ -13,7 +13,7 @@ export const NavigationItem: React.FC<NavigationItemProp> = ({ link }) => {
 			className={({ isActive }) =>
 				`
         		  flex flex-col items-center justify-center
-        		  w-14 h-10
+        		  w-18 h-12
         		  rounded-full
         		  transition-all duration-200 ease-out
 		

@@ -1,8 +1,10 @@
 import type { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import type { RegistrationFormData } from "../types";
 import { notifyService } from "@/shared/services";
+import { fileHelper } from "@/shared/lib";
 
 const { notifyError } = notifyService;
+const { filterNewFiles } = fileHelper;
 
 export const useRegistrationFormFiles = (
 	setValue: UseFormSetValue<RegistrationFormData>,
@@ -14,11 +16,7 @@ export const useRegistrationFormFiles = (
 		if (!e.target.files) return;
 
 		const newFiles = Array.from(e.target.files);
-		const existingFileNames = files.map((f) => f.name);
-
-		const filteredNewFiles = newFiles.filter(
-			(file) => !existingFileNames.includes(file.name),
-		);
+		const filteredNewFiles = filterNewFiles(newFiles, files);
 
 		const updatedFiles = [...files, ...filteredNewFiles].slice(0, 5);
 

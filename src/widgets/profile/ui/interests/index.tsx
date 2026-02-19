@@ -4,15 +4,16 @@ import { InterestsList } from "@/shared/components";
 
 export const ProfileInterests: React.FC = () => {
 	const { profile } = useProfile();
-	const { interests, isError } = useUserInterests(profile.id);
+	const { interests, isLoading, isError } = useUserInterests(profile?.id);
 
 	if (isError) return <span>Не удалось загрузить интересы</span>;
-
-	console.log(profile.id);
+	if (isLoading) return <span>Loading...</span>;
+	if (!interests || interests.length === 0) return <div>No interests</div>;
 
 	return (
-		<InterestsList
-			interests={interests?.map((interest) => interest.interest) ?? []}
-		/>
+		<>
+			<h2 className='font-semibold text-lg mb-2'>Интересы</h2>
+			<InterestsList interests={interests ?? []} />
+		</>
 	);
 };

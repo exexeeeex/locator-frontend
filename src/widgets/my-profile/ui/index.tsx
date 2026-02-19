@@ -21,12 +21,10 @@ export const MyProfile: React.FC = () => {
 		>
 			<section
 				className='
-      			  min-h-[90vh]
       			  rounded-3xl
       			  bg-card/80 backdrop-blur-xl
       			  border border-border/40
       			  shadow-[0_10px_40px_-15px_rgba(0,0,0,0.15)]
-      			  overflow-hidden
       			'
 			>
 				<MyProfileHeader />

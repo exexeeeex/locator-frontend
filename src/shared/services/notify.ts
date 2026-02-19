@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast, type Id } from "react-toastify";
 
 const baseStyle = {
 	borderRadius: "22px",
@@ -31,6 +31,34 @@ export const notifyService = {
 			style: {
 				...baseStyle,
 				background: "rgba(52, 199, 89, 0.85)",
+				color: "#fff",
+			},
+		});
+	},
+
+	notifyLoading: (message: string) => {
+		const loading = toast.loading(message, {
+			style: {
+				...baseStyle,
+				color: "#fff",
+				background: "rgb(140, 140, 140)",
+			},
+		});
+		return loading;
+	},
+
+	notifyUpdate: (toastId: Id, message: string, isSuccess: boolean) => {
+		toast.update(toastId, {
+			render: message,
+			isLoading: false,
+			type: isSuccess ? "success" : "error",
+			autoClose: 2000,
+			draggable: true,
+			style: {
+				...baseStyle,
+				background: isSuccess
+					? "rgba(52, 199, 89, 0.85)"
+					: "rgba(255, 59, 48, 0.85)",
 				color: "#fff",
 			},
 		});

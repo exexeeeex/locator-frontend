@@ -10,6 +10,8 @@ import {
 	BriefcaseBusiness,
 	GraduationCap,
 	Settings,
+	Camera,
+	X as Close,
 } from "lucide-react";
 
 export const ICON_MAP: Record<IconType, LucideIcon> = {
@@ -22,4 +24,6 @@ export const ICON_MAP: Record<IconType, LucideIcon> = {
 	work: BriefcaseBusiness,
 	education: GraduationCap,
 	settings: Settings,
+	camera: Camera,
+	close: Close,
 };

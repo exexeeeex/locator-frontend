@@ -4,4 +4,5 @@ export {
 	useUserProfile,
 	useProfileAbout,
 	useProfileBody,
+	useMyMedia,
 } from "./hooks";

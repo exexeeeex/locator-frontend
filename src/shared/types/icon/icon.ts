@@ -7,4 +7,6 @@ export type IconType =
 	| "pin"
 	| "work"
 	| "education"
-	| "settings";
+	| "settings"
+	| "camera"
+	| "close";

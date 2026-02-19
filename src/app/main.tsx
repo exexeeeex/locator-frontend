@@ -29,6 +29,7 @@ createRoot(document.getElementById("root")!).render(
 					autoClose={2000}
 					style={{
 						padding: "60px 50px",
+						gap: "8px",
 					}}
 				/>
 				<TelegramProvider>
