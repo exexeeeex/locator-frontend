@@ -1,88 +1,94 @@
 import type { UserMedia } from "@/entities/user/model/types";
-import { useMyMedia } from "@/features/profile/model";
-import { Icon, Modal } from "@/shared/components";
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useMyMediaActions } from "@/features/profile";
+import {
+	MediaActionsContext,
+	MediaItem,
+} from "@/features/profile/ui/media-item";
+import { Modal } from "@/shared/components";
+import { AnimatePresence, motion } from "framer-motion";
+import { useMemo, useOptimistic, useRef, useTransition } from "react";
 
 type Props = {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	userMedia?: UserMedia[];
-	isDeleting: boolean;
-	deleteMedia: (id: string) => void;
+	profileId: string;
 };
 
 export const MyProfileAvatarModal: React.FC<Props> = ({
 	open,
 	onOpenChange,
 	userMedia,
-	deleteMedia,
+	profileId,
 }) => {
 	const ref = useRef<HTMLInputElement>(null);
+	const { handleDelete, handleUpload } = useMyMediaActions();
+	const [isPending, startTransition] = useTransition();
+
+	const [optimisticMedia, removeOptimisticMedia] = useOptimistic(
+		userMedia,
+		(state, deleteId: string) => state?.filter((m) => m.id !== deleteId),
+	);
 
 	const isLimitReached = userMedia && userMedia.length >= 6;
-	const { handleFileChange } = useMyMedia();
+
+	const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		handleUpload(e, profileId);
+		e.target.value = "";
+	};
+
+	const onDeleteWrapper = (id: string) => {
+		startTransition(async () => {
+			removeOptimisticMedia(id);
+			await handleDelete(id);
+		});
+	};
+
+	const contextValue = useMemo(
+		() => ({ onDelete: onDeleteWrapper }),
+		[handleDelete],
+	);
 
 	return (
-		<div>
-			<Modal
-				disabled={isLimitReached}
-				open={open}
-				onOpenChange={onOpenChange}
-				trigger={<div className='hidden' />}
-				buttonProps={"Добавить фото"}
-				action={() => ref.current?.click()}
-			>
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
-					className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4'
+		<MediaActionsContext.Provider value={contextValue}>
+			<div>
+				<Modal
+					disabled={isLimitReached || isPending}
+					open={open}
+					onOpenChange={onOpenChange}
+					trigger={<div className='hidden' />}
+					buttonProps={isLimitReached ? `Лимит фото (6)` : `Добавить фото`}
+					action={() => ref.current?.click()}
 				>
-					{userMedia?.map((media) => (
-						<div
-							key={media.id}
-							className='aspect-square relative overflow-hidden rounded-xl'
-						>
-							<div className='absolute right-2 top-2 p-1 rounded-2xl bg-red-500/50'>
-								<div
-									onClick={(e) => {
-										e.stopPropagation();
-										deleteMedia(media.id);
-									}}
-									role='button'
-									aria-label='Удалить фото'
-									className='cursor-pointer'
-								>
-									<Icon
-										icon={"close"}
-										size={24}
-										color={"white"}
-										fill={"none"}
-										stroke={"white"}
-									/>
-								</div>
+					<div className='mt-4 min-h-[200px]'>
+						{optimisticMedia && optimisticMedia.length === 0 ? (
+							<div className='flex items-center justify-center h-full text-gray-400'>
+								Нет загруженных фотографий
 							</div>
-							<img
-								className='w-full h-full object-cover active:scale-105 transition-transform duration-300'
-								src={`${media.link}`}
-								alt='User media'
-							/>
-						</div>
-					))}
-				</motion.div>
-			</Modal>
-			<input
-				hidden
-				ref={ref}
-				type='file'
-				multiple
-				accept='image/*'
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-					handleFileChange(e, userMedia ? userMedia[0].userProfileId : "")
-				}
-			/>
-		</div>
+						) : (
+							<motion.div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
+								<AnimatePresence mode='popLayout'>
+									{optimisticMedia &&
+										optimisticMedia.map((media) => (
+											<MediaItem
+												key={media.id}
+												media={media}
+											/>
+										))}
+								</AnimatePresence>
+							</motion.div>
+						)}
+					</div>
+				</Modal>
+				<input
+					hidden
+					ref={ref}
+					type='file'
+					multiple
+					accept='image/*'
+					onChange={onFileChange}
+				/>
+			</div>
+		</MediaActionsContext.Provider>
 	);
 };

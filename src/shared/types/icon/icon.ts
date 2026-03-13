@@ -9,4 +9,5 @@ export type IconType =
 	| "education"
 	| "settings"
 	| "camera"
-	| "close";
+	| "close"
+	| "star";

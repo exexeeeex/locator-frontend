@@ -12,6 +12,7 @@ import {
 	Settings,
 	Camera,
 	X as Close,
+	Star,
 } from "lucide-react";
 
 export const ICON_MAP: Record<IconType, LucideIcon> = {
@@ -26,4 +27,5 @@ export const ICON_MAP: Record<IconType, LucideIcon> = {
 	settings: Settings,
 	camera: Camera,
 	close: Close,
+	star: Star,
 };

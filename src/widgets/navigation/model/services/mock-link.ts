@@ -10,7 +10,7 @@ export const MOCK_LINK: NavigationLink[] = [
   {
     id: 2,
     name: "Симпатии",
-    linkTo: "likes",
+    linkTo: "sympathies",
     icon: "heart",
   },
   {
@@ -21,7 +21,10 @@ export const MOCK_LINK: NavigationLink[] = [
   },
 ];
 
-export const MOCK_LINK_MAP = MOCK_LINK.reduce((acc, link) => {
-  acc[link.id] = link;
-  return acc;
-}, {} as Record<number, NavigationLink>);
+export const MOCK_LINK_MAP = MOCK_LINK.reduce(
+  (acc, link) => {
+    acc[link.id] = link;
+    return acc;
+  },
+  {} as Record<number, NavigationLink>,
+);

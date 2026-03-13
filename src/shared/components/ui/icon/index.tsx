@@ -21,7 +21,7 @@ export const Icon: React.FC<NavigationIconProps> = ({
 	const IconComponent = ICON_MAP[icon];
 
 	return (
-		<div>
+		<div className='bg-transparent'>
 			<IconComponent
 				stroke={stroke}
 				className={className}

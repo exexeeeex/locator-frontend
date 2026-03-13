@@ -11,14 +11,24 @@ export const profileMediaApi = createApi({
 			query: (profileId: string) => ({
 				url: `user-media/get-all/${profileId}`,
 			}),
-			providesTags: ["Medias"],
+			providesTags: (result) =>
+				result
+					? [
+							...result.map(({ id }) => ({ type: "Medias" as const, id })),
+							{ type: "Medias", id: "LIST" },
+						]
+					: [{ type: "Medias", id: "LIST" }],
 		}),
 		deleteMedia: builder.mutation<UserMedia[], string>({
 			query: (id: string) => ({
 				url: `user-media/delete/${id}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["Medias", "MyProfile"],
+			invalidatesTags: (result, error, id) => [
+				{ type: "Medias", id },
+				{ type: "Medias", id: "LIST" },
+				"MyProfile",
+			],
 		}),
 		uploadMedia: builder.mutation<
 			UserMedia[],
@@ -32,7 +42,7 @@ export const profileMediaApi = createApi({
 					profileid: profileId,
 				},
 			}),
-			invalidatesTags: ["Medias", "MyProfile" ],
+			invalidatesTags: [{ type: "Medias", id: "LIST" }, "MyProfile"],
 		}),
 	}),
 });

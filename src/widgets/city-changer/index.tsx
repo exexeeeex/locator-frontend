@@ -14,6 +14,7 @@ import {
 import { Button } from "@/shared/components/ui";
 import { MapPin } from "lucide-react";
 import { useCitySearch } from "@/features/city-search";
+import { cn } from "@/shared/lib/utils";
 
 type Props = {
 	currentCity: string | null;
@@ -36,39 +37,44 @@ export const CityChanger: FC<Props> = ({ currentCity, onSelectCity }) => {
 		>
 			<PopoverTrigger asChild>
 				<Button
-					className='
-                      h-12 w-full rounded-2xl
-                      bg-input/80 border border-border/40
-                      justify-baseline px-4
-                      text-[17px]
-                    '
+					variant='ghost'
+					className={cn(
+						"h-14 w-full rounded-2xl justify-start px-4",
+						"text-[15px] font-normal transition-all duration-300 outline-none",
+						"bg-foreground/2 border border-foreground/6",
+						currentCity ? "text-foreground" : "text-muted-foreground/40",
+						"hover:bg-foreground/4 hover:border-primary/50 hover:text-foreground",
+						"data-[state=open]:bg-foreground/2 data-[state=open]:border-primary",
+						"data-[state=open]:ring-[3px] data-[state=open]:ring-primary/10",
+					)}
 				>
-					<MapPin size={18} />
+					<MapPin
+						className='mr-3 text-primary/70'
+						size={20}
+					/>
 					{searchedCities?.find((c) => c.id === currentCity)?.name ??
 						"Выбрать город"}
 				</Button>
 			</PopoverTrigger>
 
 			<PopoverContent
-				className='
-				  bg-linear-to-t from-card/40 to-transparent
-				  backdrop-blur-2xl
-        		  backdrop-saturate-150
-      			  rounded-3xl
-      			  border border-border/40
-      			  shadow-xl
-				  w-[80vw]
-				  mt-1
-      			'
+				className={cn(
+					"w-[80vw] p-1 mt-2 rounded-[1.5rem]",
+					"bg-card/65 backdrop-blur-3xl backdrop-saturate-150",
+					"border border-border shadow-xl shadow-black/5 dark:shadow-black/20",
+				)}
 			>
-				<Command>
+				<Command className='bg-transparent'>
 					<CommandInput
 						value={searchValue}
 						onValueChange={setSearchValue}
-						placeholder='Поиск города'
+						placeholder='Поиск города...'
+						className='text-[15px] border-none focus:ring-0 placeholder:text-muted-foreground/40'
 					/>
-					<CommandList className='mt-1'>
-						<CommandEmpty>Город не найден</CommandEmpty>
+					<CommandList className='mt-2 max-h-50 p-1'>
+						<CommandEmpty className='py-6 text-center text-[15px] text-muted-foreground'>
+							Город не найден 💔
+						</CommandEmpty>
 						{searchedCities?.map((city) => (
 							<CommandItem
 								key={city.id}
@@ -76,6 +82,10 @@ export const CityChanger: FC<Props> = ({ currentCity, onSelectCity }) => {
 									onSelectCity(city.id);
 									setIsOpenPopover(false);
 								}}
+								className={cn(
+									"rounded-xl px-4 py-3 mb-1 cursor-pointer transition-colors text-[15px]",
+									"aria-selected:bg-card aria-selected:text-foreground",
+								)}
 							>
 								{city.name}
 							</CommandItem>

@@ -13,7 +13,5 @@ export const useMyProfile = () => {
 			purpose: data?.purpose,
 			userId: data?.userId,
 		}),
-		refetchOnFocus: true,
-		refetchOnMountOrArgChange: true,
 	});
 };

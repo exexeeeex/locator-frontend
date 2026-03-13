@@ -1,37 +1,49 @@
 body {
-  background-color: var(--background)
+    background-color: var(--background);
 }
 
 * {
-  font-family: "Manrope", sans-serif;
+    font-family: "Manrope", sans-serif;
 }
 
-input, textarea {
-  &:focus-visible {
-    outline: 0;
-  }
+input,
+textarea {
+    &:focus-visible {
+        outline: 0;
+    }
 }
 
 input:focus,
 textarea:focus,
 select:focus,
 button:focus {
-  outline: none !important;
-  box-shadow: none !important;
-  --tw-ring-color: transparent !important;
-  --tw-ring-offset-width: 0px !important;
-  --tw-ring-shadow: none !important;
-  border-color: inherit !important;
+    outline: none !important;
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
+    --tw-ring-offset-width: 0px !important;
+    --tw-ring-shadow: none !important;
+    border-color: inherit !important;
 }
 
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 button:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 *:focus-visible {
-  @apply ring-0 ring-offset-0 outline-none;
+    @apply ring-0 ring-offset-0 outline-none;
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }

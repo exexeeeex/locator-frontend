@@ -1,4 +1,5 @@
-import { Card, Icon } from "@/shared/components";
+import { Icon } from "@/shared/components";
+import { cn } from "@/shared/lib/utils";
 import type { IconType } from "@/shared/types";
 
 type Props = {
@@ -9,43 +10,40 @@ type Props = {
 
 export const DetailItem: React.FC<Props> = ({ icon, title, value }) => {
 	return (
-		<Card
-			className='
-      		  w-full
-      		  rounded-2xl
-      		  px-4 py-3
-
-      		  bg-card/80
-      		  border border-border/60
-      		'
+		<div
+			className={cn(
+				"group relative flex w-full items-center gap-4 overflow-hidden rounded-2xl border p-4",
+				"transition-all duration-300",
+				"border border-card/30 bg-card/40 hover:bg-white/6 hover:border-white/10",
+			)}
 		>
-			<div className='flex items-center gap-4'>
-				<div
-					className='
-          			  w-10 h-10 rounded-xl
-          			  flex items-center justify-center
-          			  bg-primary/10
-          			'
-				>
-					<Icon
-						icon={icon}
-						size={24}
-						color='currentColor'
-						stroke='currentColor'
-						className='text-primary fill-primary/50'
-						fill={"currentColor"}
-					/>
-				</div>
+			<div className='absolute inset-0 bg-linear-to-r from-primary/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 
-				<div className='flex flex-col leading-tight'>
-					<span className='text-[13px] text-muted-foreground font-medium'>
-						{title}
-					</span>
-					<span className='text-[16px] font-semibold tracking-tight'>
-						{value}
-					</span>
-				</div>
+			<div
+				className={cn(
+					"relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl",
+					"border border-primary/10 bg-primary/10",
+					"transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(var(--primary),0.2)]",
+				)}
+			>
+				<Icon
+					icon={icon}
+					size={22}
+					color='currentColor'
+					stroke='currentColor'
+					fill='currentColor'
+					className='text-foreground opacity-80 transition-opacity group-hover:opacity-100'
+				/>
 			</div>
-		</Card>
+
+			<div className='relative z-10 flex flex-col justify-center gap-0.5 overflow-hidden'>
+				<span className='text-[13px] font-medium text-muted-foreground transition-colors group-hover:text-foreground/70'>
+					{title}
+				</span>
+				<span className='truncate text-[15px] font-semibold tracking-tight text-foreground/90'>
+					{value}
+				</span>
+			</div>
+		</div>
 	);
 };

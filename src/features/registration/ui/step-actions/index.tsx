@@ -18,14 +18,24 @@ export const RegistrationStepActions: React.FC<Props> = ({
 	} = useFormContext<RegistrationFormData>();
 
 	return (
-		<div className='flex flex-col gap-2'>
+		<div className='flex flex-col gap-3 pt-4'>
 			{(step === "photo" || step === "priority") && (
 				<Button
+					type='button'
 					variant='secondary'
 					onClick={prev}
-					className='rounded-md w-full bg-muted text-xl font-semibold'
+					className='
+          			  h-12 w-full rounded-2xl
+          			  border border-white/6
+          			  bg-primary/50 hover:bg-white/6
+          			  text-base font-medium
+          			  backdrop-blur-md
+          			  transition-all duration-300
+          			  hover:border-white/10
+          			  active:scale-[0.98]
+          			'
 				>
-					Назад
+					← Назад
 				</Button>
 			)}
 
@@ -33,16 +43,36 @@ export const RegistrationStepActions: React.FC<Props> = ({
 				<Button
 					disabled={isSubmitting}
 					type='submit'
-					className='rounded-md w-full text-xl font-semibold'
+					className='
+          			  h-12 w-full rounded-2xl
+          			  bg-linear-to-r from-primary to-accent
+          			  text-base font-semibold text-white
+          			  shadow-lg shadow-primary/20
+          			  transition-all duration-300
+          			  hover:shadow-primary/30
+          			  hover:scale-[1.01]
+          			  active:scale-[0.98]
+          			  disabled:opacity-60
+          			'
 				>
 					{isSubmitting ? "Создание..." : "Создать анкету"}
 				</Button>
 			) : (
 				<Button
+					type='button'
 					onClick={next}
-					className='rounded-md w-full mb-15 text-xl font-semibold'
+					className='
+          			  h-12 w-full rounded-2xl
+          			  bg-linear-to-r from-primary to-accent
+          			  text-base font-semibold text-white
+          			  shadow-lg shadow-primary/20
+          			  transition-all duration-300
+          			  hover:shadow-primary/30
+          			  hover:scale-[1.01]
+          			  active:scale-[0.98]
+          			'
 				>
-					Продолжить
+					Продолжить →
 				</Button>
 			)}
 		</div>

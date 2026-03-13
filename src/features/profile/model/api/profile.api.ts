@@ -6,6 +6,7 @@ export const profileApi = createApi({
 	reducerPath: "profileApi",
 	baseQuery: baseQueryWithReauth,
 	tagTypes: ["MyProfile", "UserProfile"],
+	keepUnusedDataFor: 300,
 	endpoints: (builder) => ({
 		getUserProfile: builder.query<UserProfile, string>({
 			query: (userId: string) => ({

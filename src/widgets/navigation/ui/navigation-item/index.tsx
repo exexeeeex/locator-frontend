@@ -12,17 +12,16 @@ export const NavigationItem: React.FC<NavigationItemProp> = ({ link }) => {
 			to={`/${link.linkTo}`}
 			className={({ isActive }) =>
 				`
-        		  flex flex-col items-center justify-center
-        		  w-18 h-12
-        		  rounded-full
-        		  transition-all duration-200 ease-out
-		
-        		  ${
-								isActive
-									? "bg-primary/15 text-primary"
-									: "text-muted-foreground hover:text-foreground"
-							}
-        		`
+          flex flex-col items-center justify-center
+          w-18 h-12 flex-shrink-0
+          rounded-full
+          transition-all duration-200 ease-out
+          ${
+						isActive
+							? "bg-primary/15 text-primary"
+							: "text-muted-foreground hover:text-foreground"
+					}
+        `
 			}
 		>
 			<Icon

@@ -8,13 +8,8 @@ import { InterestsList } from "@shared/components";
 export const RegistrationInterestsSelector = () => {
 	const { setValue, watch } = useFormContext<RegistrationFormData>();
 
-	const {
-		interests,
-		selectedInterests,
-		handleToggleInterest,
-		isError,
-		isLoading,
-	} = useRegistrationInterests(setValue, watch);
+	const { interests, selectedInterests, handleToggleInterest } =
+		useRegistrationInterests(setValue, watch);
 
 	return (
 		<InterestsList

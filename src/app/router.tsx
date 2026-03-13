@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { RegistrationPage } from "@/pages/registration";
 import { PublicRouteProvider } from "@/shared/providers";
 import { MyProfilePage } from "@/pages/my-profile";
+import { SympathiesPage } from "@/pages/sympathies/ui";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <MyProfilePage />,
+      },
+      {
+        path: "/sympathies",
+        element: <SympathiesPage />,
       },
     ],
   },

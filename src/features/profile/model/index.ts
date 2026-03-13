@@ -1,8 +1,18 @@
-export { profileApi, useGetMyProfileQuery } from "./api";
+export {
+	profileApi,
+	useGetMyProfileQuery,
+	profileAboutApi,
+	profileMediaApi,
+	useDeleteMediaMutation,
+	useGetProfileMediasQuery,
+	useGetUserProfileQuery,
+	useUpdateAboutFieldMutation,
+	useUploadMediaMutation,
+} from "./api";
 export {
 	useMyProfile,
 	useUserProfile,
 	useProfileAbout,
 	useProfileBody,
-	useMyMedia,
+	useMyMediaActions,
 } from "./hooks";

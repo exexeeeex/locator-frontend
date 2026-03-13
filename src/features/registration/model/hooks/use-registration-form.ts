@@ -22,7 +22,7 @@ export const useRegistrationForm = () => {
 			cityId: "",
 			purposeId: "",
 			education: "Не указано",
-			selectedInterestsIds: ["949d2a02-abe3-4596-bcf4-e770b47bc5a3"],
+			selectedInterestsIds: [],
 			job: "Не указано",
 			preferredGender: "male",
 			minAge: "16",
@@ -32,10 +32,6 @@ export const useRegistrationForm = () => {
 	});
 
 	const onSubmit = async (data: RegistrationFormData) => {
-		console.log("=== FORM SUBMISSION STARTED ===");
-		console.log("Form data:", data);
-		console.log("Files count:", data.files?.length || 0);
-
 		try {
 			const result = await dispatch(
 				registrationThunk({

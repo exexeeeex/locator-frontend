@@ -1,71 +1,68 @@
-import { useState } from "react";
+import { useCallback, useTransition } from "react";
 import {
-	useDeleteMediaMutation,
 	profileApi,
-	useGetMyProfileQuery,
+	useDeleteMediaMutation,
 	useUploadMediaMutation,
 } from "../api";
 import { notifyService } from "@/shared/services";
 import { useDispatch } from "react-redux";
-import { fileHelper } from "@/shared/lib";
 
-const { notifyError, notifyLoading, notifyUpdate } = notifyService;
-const { filterNewFiles } = fileHelper;
+const { notifyLoading, notifyUpdate } = notifyService;
 
-export const useMyMedia = () => {
-	const [openModal, setOpenModal] = useState<boolean>(false);
-	const [files, setFiles] = useState<File[] | null>(null);
+type UseMyMediaReturn = {
+	handleUpload: (
+		e: React.ChangeEvent<HTMLInputElement>,
+		profileId: string,
+	) => Promise<void>;
+	handleDelete: (id: string) => Promise<void>;
+};
 
+export const useMyMediaActions = (): UseMyMediaReturn => {
 	const dispatch = useDispatch();
+
 	const [deleteMediaMutation] = useDeleteMediaMutation();
 	const [uploadMediaMutation] = useUploadMediaMutation();
 
-	const deleteMedia = async (id: string) => {
-		try {
-			const toastLoading = notifyLoading("Удаление фотографии..");
-			await deleteMediaMutation(id).unwrap?.();
-			dispatch(profileApi.util.invalidateTags(["MyProfile"]));
-			notifyUpdate(toastLoading, "Фотография удалена", true);
-		} catch (e) {
-			notifyError(e as string);
-		}
-	};
+	const handleDeleteMedia = useCallback(
+		async (id: string) => {
+			const toastId = notifyLoading("Удаление фотографии..");
+			try {
+				await deleteMediaMutation(id).unwrap();
+				dispatch(profileApi.util.invalidateTags(["MyProfile"]));
+				notifyUpdate(toastId, "Фотография удалена", true);
+			} catch (e) {
+				notifyUpdate(toastId, `Ошибка при удалении`, false);
+				console.error(e);
+			}
+		},
+		[deleteMediaMutation],
+	);
 
-	const handleFileChange = async (
-		e: React.ChangeEvent<HTMLInputElement>,
-		profileId: string,
-	) => {
-		if (!e.target.files) return;
+	const handleFileUpload = useCallback(
+		async (e: React.ChangeEvent<HTMLInputElement>, profileId: string) => {
+			const files = e.target.files;
+			if (!files || !profileId) return;
 
-		const newFiles = Array.from(e.target.files);
-		const filteredNewFiles = filterNewFiles(newFiles, files || []);
-		const updatedFiles = [...(files || []), ...filteredNewFiles].slice(0, 5);
+			const fileList = Array.from(files).slice(0, 5);
 
-		let data = new FormData();
-		updatedFiles?.forEach((file) => {
-			data.append("files", file);
-		});
+			const formData = new FormData();
+			fileList.forEach((file) => formData.append("files", file));
 
-		const toastLoading = notifyLoading("Загрузка фотографий..");
-
-		try {
-			await uploadMediaMutation({ body: data, profileId }).unwrap?.();
-			dispatch(profileApi.util.invalidateTags(["MyProfile"]));
-			notifyUpdate(toastLoading, "Фотография загружена", true);
-			setFiles(null);
-		} catch (e) {
-			notifyUpdate(toastLoading, e as string, false);
-		}
-	};
-
-	const { isLoading } = useGetMyProfileQuery(undefined);
+			const toastId = notifyLoading("Загрузка фотографий...");
+			try {
+				await uploadMediaMutation({ body: formData, profileId }).unwrap();
+				dispatch(profileApi.util.invalidateTags(["MyProfile"]));
+				notifyUpdate(toastId, "Фотографии загружены!", true);
+			} catch (e) {
+				notifyUpdate(toastId, "Ошибка загрузки", false);
+				console.error(e);
+			}
+		},
+		[uploadMediaMutation],
+	);
 
 	return {
-		openModal,
-		setOpenModal,
-		deleteMedia,
-		isDeliting: isLoading,
-		files,
-		handleFileChange,
+		handleUpload: handleFileUpload,
+		handleDelete: handleDeleteMedia,
 	};
 };

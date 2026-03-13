@@ -4,6 +4,7 @@ export {
 	useGetUserPurposesQuery,
 	useGetUserInterestsQuery,
 	userPurposeApi,
+	userInterestsApi,
 } from "./api";
 export {
 	type UserPurpose,

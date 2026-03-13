@@ -1,13 +1,14 @@
 import { useMyProfile } from "@/features/profile";
-import { useMyMedia } from "@/features/profile/model";
 import { Icon } from "@/shared/components";
 import { MyProfileAvatarModal } from "..";
+import { useState } from "react";
 
 export const MyProfileAvatar: React.FC = () => {
-	const { userMedias } = useMyProfile();
-	const { openModal, setOpenModal, deleteMedia } = useMyMedia();
+	const { userMedias, profile } = useMyProfile();
 
-	const avatar = () => (userMedias?.length ? `${userMedias[0].link}` : "");
+	const avatar = () =>
+		userMedias?.length ? `${userMedias.find((um) => um.isPriority)?.link}` : "";
+	const [open, setOpen] = useState<boolean>(false);
 
 	return (
 		<>
@@ -32,7 +33,7 @@ export const MyProfileAvatar: React.FC = () => {
         			'
 				/>
 				<div
-					onClick={() => setOpenModal(!openModal)}
+					onClick={() => setOpen(!open)}
 					className='bg-muted/80 border-border/40 border 
 					bottom-0 right-2 
 					w-9 h-9 
@@ -50,11 +51,10 @@ export const MyProfileAvatar: React.FC = () => {
 			</div>
 
 			<MyProfileAvatarModal
+				open={open}
+				onOpenChange={setOpen}
+				profileId={profile ? profile.id : ""}
 				userMedia={userMedias}
-				open={openModal}
-				onOpenChange={setOpenModal}
-				isDeleting={false}
-				deleteMedia={deleteMedia}
 			/>
 		</>
 	);

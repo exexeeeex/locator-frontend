@@ -2,6 +2,7 @@ import { UserLocation } from "@/shared/components";
 import { DetailItem, ProfileAbout, ProfileInterests } from "../..";
 import { useProfileBody } from "@/features/profile/model/hooks";
 import { useProfile } from "../context";
+import { RatingBadge } from "@/entities/profile";
 
 export const ProfileBody: React.FC = ({}) => {
 	const { profile } = useProfile();
@@ -11,11 +12,12 @@ export const ProfileBody: React.FC = ({}) => {
 
 	return (
 		<div className='pt-20 pb-6 px-5'>
-			<div className='flex items-end gap-2'>
+			<div className='flex flex-wrap items-center gap-2'>
 				<h2 className='text-2xl font-semibold tracking-tight'>{username}</h2>
 				<span className='text-xl text-muted-foreground font-medium'>
 					{age || "—"}
 				</span>
+				<RatingBadge score={0.99} />
 			</div>
 
 			<UserLocation location={`${city.name}, ${region.name}`} />

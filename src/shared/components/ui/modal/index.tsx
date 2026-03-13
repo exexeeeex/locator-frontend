@@ -66,12 +66,14 @@ export const Modal: React.FC<Props> = ({
 			<DialogContent
 				className={cn(
 					`
-                        max-w-95
-                        rounded-3xl
-                        bg-card/85 backdrop-blur-xl
-                        border border-border/40
-                        p-6
-                    `,
+    				max-w-[95vw]
+    				w-full
+    				overflow-hidden
+    				rounded-3xl
+    				bg-card/20 backdrop-blur-xl
+    				border border-border/40
+    				p-6
+    				`,
 					classNames?.content,
 				)}
 			>
@@ -103,7 +105,14 @@ export const Modal: React.FC<Props> = ({
 					</DialogHeader>
 				)}
 
-				<div className={cn(classNames?.content)}>{children}</div>
+				<div
+					className={cn(
+						classNames?.content,
+						"max-w-full min-w-0 break-words whitespace-pre-wrap",
+					)}
+				>
+					{children}
+				</div>
 
 				<DialogFooter className='flex flex-col gap-3 '>
 					<Button
@@ -113,6 +122,9 @@ export const Modal: React.FC<Props> = ({
                           w-full h-12
                           rounded-2xl
                           text-[16px] font-semibold
+						  bg-primary/90
+						  backdrop-blur-xl
+						  text-foreground
                           shadow-sm
                         '
 					>
@@ -127,6 +139,7 @@ export const Modal: React.FC<Props> = ({
                                 w-full h-12
                                 rounded-2xl
                                 border-border/40
+								bg-muted/90
                                 text-[16px]
                             '
 						>

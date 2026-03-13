@@ -8,8 +8,8 @@ import { profileApi } from "@/features/profile";
 import authenticationReducer from "@features/authentication/model/slices/authentication";
 import { authenticationListener } from "./listeners";
 import { interestApi } from "@/entities/interest";
-import { userInterestsApi } from "@/entities/user/model/api";
-import { profileMediaApi } from "@/features/profile/model/api";
+import { profileAboutApi, profileMediaApi } from "@/features/profile/model";
+import { userInterestsApi } from "@/entities/user/model";
 
 export const store = configureStore({
 	reducer: {
@@ -22,6 +22,7 @@ export const store = configureStore({
 		[interestApi.reducerPath]: interestApi.reducer,
 		[userInterestsApi.reducerPath]: userInterestsApi.reducer,
 		[profileMediaApi.reducerPath]: profileMediaApi.reducer,
+		[profileAboutApi.reducerPath]: profileAboutApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
@@ -33,7 +34,8 @@ export const store = configureStore({
 			.concat(authenticationListener.middleware as Middleware)
 			.concat(interestApi.middleware as Middleware)
 			.concat(userInterestsApi.middleware as Middleware)
-			.concat(profileMediaApi.middleware as Middleware),
+			.concat(profileMediaApi.middleware as Middleware)
+			.concat(profileAboutApi.middleware as Middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
