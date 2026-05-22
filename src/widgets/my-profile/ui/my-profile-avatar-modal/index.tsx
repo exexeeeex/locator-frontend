@@ -5,7 +5,7 @@ import {
 	MediaItem,
 } from "@/features/profile/ui/media-item";
 import { Modal } from "@/shared/components";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useMemo, useOptimistic, useRef, useTransition } from "react";
 
 type Props = {
@@ -22,7 +22,8 @@ export const MyProfileAvatarModal: React.FC<Props> = ({
 	profileId,
 }) => {
 	const ref = useRef<HTMLInputElement>(null);
-	const { handleDelete, handleUpload } = useMyMediaActions();
+	const { handleDelete, handleUpload, handleChangePriority } =
+		useMyMediaActions();
 	const [isPending, startTransition] = useTransition();
 
 	const [optimisticMedia, removeOptimisticMedia] = useOptimistic(
@@ -45,7 +46,7 @@ export const MyProfileAvatarModal: React.FC<Props> = ({
 	};
 
 	const contextValue = useMemo(
-		() => ({ onDelete: onDeleteWrapper }),
+		() => ({ onDelete: onDeleteWrapper, changePriority: handleChangePriority }),
 		[handleDelete],
 	);
 
@@ -60,22 +61,25 @@ export const MyProfileAvatarModal: React.FC<Props> = ({
 					buttonProps={isLimitReached ? `Лимит фото (6)` : `Добавить фото`}
 					action={() => ref.current?.click()}
 				>
-					<div className='mt-4 min-h-[200px]'>
+					<div className='mt-4 min-h-50'>
 						{optimisticMedia && optimisticMedia.length === 0 ? (
 							<div className='flex items-center justify-center h-full text-gray-400'>
 								Нет загруженных фотографий
 							</div>
 						) : (
 							<motion.div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
-								<AnimatePresence mode='popLayout'>
-									{optimisticMedia &&
-										optimisticMedia.map((media) => (
+								{optimisticMedia &&
+									[...optimisticMedia]
+										.sort((a, b) => {
+											if (a.isPriority === b.isPriority) return 0;
+											return a.isPriority ? -1 : 1;
+										})
+										.map((media) => (
 											<MediaItem
 												key={media.id}
 												media={media}
 											/>
 										))}
-								</AnimatePresence>
 							</motion.div>
 						)}
 					</div>

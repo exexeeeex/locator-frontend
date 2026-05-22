@@ -1,0 +1,1 @@
+export { useComplaint } from "./hook";

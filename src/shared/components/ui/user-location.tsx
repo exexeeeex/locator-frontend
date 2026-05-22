@@ -1,18 +1,15 @@
 import { Icon } from ".";
 
 interface UserLocationProps {
-  location: string;
+	location: string;
 }
 
 export const UserLocation: React.FC<UserLocationProps> = ({ location }) => (
-  <div className='flex items-center gap-2 mt-[5px]'>
-    <Icon
-      icon={"pin"}
-      size={16}
-      color={"var(--muted-foreground)"}
-      fill={""}
-      stroke={"var(--muted-foreground)"}
-    />
-    <span className='text-muted-foreground'>{location}</span>
-  </div>
+	<div className='flex items-center gap-2 mt-1.25'>
+		<Icon
+			icon={"pin"}
+			size={16}
+		/>
+		<span className='text-muted-foreground'>{location}</span>
+	</div>
 );

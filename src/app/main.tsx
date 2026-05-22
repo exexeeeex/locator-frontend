@@ -6,7 +6,7 @@ import { DeviceProvider } from "@/shared/providers/device-provider";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { Provider } from "react-redux";
-import { store } from "@/shared/lib/api/store";
+import { store } from "@/shared/lib/api/store/store";
 import { ToastContainer } from "react-toastify";
 import { bootstrapAuth } from "./bootstrap-auth";
 import { ThemeProvider } from "@/shared/providers";

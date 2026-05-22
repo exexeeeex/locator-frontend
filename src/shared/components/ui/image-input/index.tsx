@@ -8,27 +8,28 @@ interface ImageInputProps extends React.ComponentProps<typeof Input> {
 	iconPosition?: "left" | "right";
 }
 
-const ImageInput = forwardRef<HTMLInputElement, ImageInputProps>(({ className = "", icon, iconSize = 20, iconPosition = "left", ...props }, ref) => {
-	const isIconLeft = iconPosition === "left";
+const ImageInput = forwardRef<HTMLInputElement, ImageInputProps>(
+	(
+		{ className = "", icon, iconSize = 20, iconPosition = "left", ...props },
+		ref,
+	) => {
+		const isIconLeft = iconPosition === "left";
 
-	return (
-		<div className='relative'>
-			<Icon
-				icon={icon}
-				className={`
+		return (
+			<div className='relative'>
+				<Icon
+					icon={icon}
+					className={`
 						absolute top-1/2 -translate-y-1/2
 						${isIconLeft ? "left-3" : "right-3"}
 						text-muted-foreground/70
 						pointer-events-none
 					`}
-				size={iconSize}
-				fill='transparent'
-				stroke='currentColor'
-				color={"currenColor"}
-			/>
-			<Input
-				ref={ref}
-				className={`
+					size={iconSize}
+				/>
+				<Input
+					ref={ref}
+					className={`
 						h-12 px-11 text-[15px]
 						rounded-2xl
 						bg-input/50
@@ -40,15 +41,16 @@ const ImageInput = forwardRef<HTMLInputElement, ImageInputProps>(({ className = 
 						placeholder:text-muted-foreground/60
 						${className}
 					`}
-				style={{
-					paddingLeft: isIconLeft ? "3rem" : "1rem",
-					paddingRight: isIconLeft ? "1rem" : "3rem",
-				}}
-				{...props}
-			/>
-		</div>
-	);
-});
+					style={{
+						paddingLeft: isIconLeft ? "3rem" : "1rem",
+						paddingRight: isIconLeft ? "1rem" : "3rem",
+					}}
+					{...props}
+				/>
+			</div>
+		);
+	},
+);
 
 ImageInput.displayName = "ImageInput";
 

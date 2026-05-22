@@ -1,1 +1,1 @@
-export { useSympathiesNavigation } from "./hooks";
+export { useSympathiesNavigation, useLikeCardActions } from "./hooks";

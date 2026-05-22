@@ -10,4 +10,10 @@ export type IconType =
 	| "settings"
 	| "camera"
 	| "close"
-	| "star";
+	| "star"
+	| "pen"
+	| "calendar"
+	| "ruler"
+	| "report"
+	| "message"
+	| "phone-in-hand";

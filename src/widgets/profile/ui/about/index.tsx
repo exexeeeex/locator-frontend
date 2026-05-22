@@ -33,7 +33,7 @@ export const ProfileAbout: React.FC = () => {
 						icon='profile'
 						label='Обо мне'
 						gradient='from-primary/10 to-primary/10'
-						className='rounded-lg'
+						className='rounded-lg mb-2'
 					/>
 
 					{isOwner && (
@@ -47,20 +47,17 @@ export const ProfileAbout: React.FC = () => {
 							)}
 						>
 							<Icon
-								icon='pin'
-								size={20}
+								icon='pen'
+								size={15}
 								className='opacity-70 group-hover:opacity-100'
-								color={"var(--primary)"}
-								stroke={"var(--primary)"}
-								fill='none'
 							/>
 							<span>Изменить</span>
 						</button>
 					)}
 				</div>
 
-				<div className='relative rounded-lg border border-white/5 bg-muted/80 px-3 pb-1 pt-1 transition-colors hover:bg-white/5'>
-					<p className='text-[15px] leading-relaxed whitespace-pre-wrap break-words text-foreground/90'>
+				<div className='relative rounded-xl border border-white/5 bg-muted/80 px-3 pb-1 pt-1 transition-colors hover:bg-white/5'>
+					<p className='text-[17px] leading-relaxed whitespace-pre-wrap break-words text-foreground/90'>
 						{profile.about || "Пользователь пока ничего не рассказал о себе"}
 					</p>
 				</div>

@@ -3,7 +3,10 @@ import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { profileAboutApi, useUpdateAboutFieldMutation } from "../api";
+import {
+	profileAboutApi,
+	useUpdateAboutFieldMutation,
+} from "../../../../entities/profile/api";
 import { notifyService } from "@/shared/services";
 
 const { notifyLoading, notifyUpdate } = notifyService;

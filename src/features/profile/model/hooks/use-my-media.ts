@@ -1,11 +1,13 @@
-import { useCallback, useTransition } from "react";
+import { useCallback } from "react";
 import {
 	profileApi,
 	useDeleteMediaMutation,
+	useSetPriorityMutation,
 	useUploadMediaMutation,
-} from "../api";
+} from "../../../../entities/profile/api";
 import { notifyService } from "@/shared/services";
 import { useDispatch } from "react-redux";
+import { logger } from "@/shared/lib/logger";
 
 const { notifyLoading, notifyUpdate } = notifyService;
 
@@ -15,6 +17,7 @@ type UseMyMediaReturn = {
 		profileId: string,
 	) => Promise<void>;
 	handleDelete: (id: string) => Promise<void>;
+	handleChangePriority: (id: string, profileId: string) => Promise<void>;
 };
 
 export const useMyMediaActions = (): UseMyMediaReturn => {
@@ -22,6 +25,7 @@ export const useMyMediaActions = (): UseMyMediaReturn => {
 
 	const [deleteMediaMutation] = useDeleteMediaMutation();
 	const [uploadMediaMutation] = useUploadMediaMutation();
+	const [setPriorityMutation] = useSetPriorityMutation();
 
 	const handleDeleteMedia = useCallback(
 		async (id: string) => {
@@ -32,7 +36,7 @@ export const useMyMediaActions = (): UseMyMediaReturn => {
 				notifyUpdate(toastId, "Фотография удалена", true);
 			} catch (e) {
 				notifyUpdate(toastId, `Ошибка при удалении`, false);
-				console.error(e);
+				logger.error("Failed to delete media:", e);
 			}
 		},
 		[deleteMediaMutation],
@@ -55,14 +59,33 @@ export const useMyMediaActions = (): UseMyMediaReturn => {
 				notifyUpdate(toastId, "Фотографии загружены!", true);
 			} catch (e) {
 				notifyUpdate(toastId, "Ошибка загрузки", false);
-				console.error(e);
+				logger.error("Failed to upload media:", e);
 			}
 		},
 		[uploadMediaMutation],
 	);
 
+	const handleSetPriority = useCallback(
+		async (id: string, profileId: string) => {
+			const toastId = notifyLoading("Обновление приоритета...");
+			try {
+				await setPriorityMutation({
+					profileId: profileId,
+					mediaId: id,
+				}).unwrap();
+				dispatch(profileApi.util.invalidateTags(["MyProfile"]));
+				notifyUpdate(toastId, "Приоритет обновлён!", true);
+			} catch (e) {
+				notifyUpdate(toastId, "Ошибка обновления приоритета", false);
+				logger.error("Failed to set media priority:", e);
+			}
+		},
+		[setPriorityMutation],
+	);
+
 	return {
 		handleUpload: handleFileUpload,
 		handleDelete: handleDeleteMedia,
+		handleChangePriority: handleSetPriority,
 	};
 };

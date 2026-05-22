@@ -2,6 +2,7 @@ import type { SerializedError } from "@reduxjs/toolkit";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { logger } from "../logger";
 
 type RedirectRule = {
 	status: number;
@@ -15,7 +16,7 @@ export const useErrorRedirect = (
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log("useErrorRedirect triggered with error:", error);
+		logger.info("useErrorRedirect triggered with error:", error);
 
 		if (!error || !("status" in error)) return;
 		if (typeof error.status !== "number") return;

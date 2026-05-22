@@ -108,7 +108,7 @@ export const Modal: React.FC<Props> = ({
 				<div
 					className={cn(
 						classNames?.content,
-						"max-w-full min-w-0 break-words whitespace-pre-wrap",
+						"max-w-full min-w-0 wrap-break-word whitespace-pre-wrap",
 					)}
 				>
 					{children}

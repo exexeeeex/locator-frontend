@@ -17,7 +17,7 @@ export const RegistrationStepBirthday: React.FC = () => {
 	return (
 		<GlassCard glow>
 			<SectionHeader
-				icon={"fire"}
+				icon={"calendar"}
 				label='Дата рождения'
 				gradient='from-accent to-primary'
 			/>

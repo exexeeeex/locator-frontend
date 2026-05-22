@@ -4,6 +4,7 @@ import {
 } from "@/features/registration";
 import { GlassCard } from "@/shared/components/ui/glass-card";
 import { SectionHeader } from "@/shared/components/ui/section-header";
+import { logger } from "@/shared/lib/logger";
 import { cn } from "@/shared/lib/utils";
 import { useFormContext } from "react-hook-form";
 
@@ -11,7 +12,7 @@ export const RegistrationStepGender: React.FC = () => {
 	const formContext = useFormContext<RegistrationFormData>();
 
 	if (!formContext) {
-		console.error("RegistrationStepGender: useFormContext returned null");
+		logger.error("RegistrationStepGender: useFormContext returned null");
 		return <div>Ошибка загрузки формы</div>;
 	}
 
@@ -23,7 +24,7 @@ export const RegistrationStepGender: React.FC = () => {
 			<SectionHeader
 				icon={"heart"}
 				label='Выбери свой пол'
-				gradient='from-pink-500 to-rose-400'
+				gradient='from-primary/40 to-accent/50'
 			/>
 			<div className='grid grid-cols-2 gap-3'>
 				<button

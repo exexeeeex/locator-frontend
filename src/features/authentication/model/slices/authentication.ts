@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { authenticationApi } from "..";
+import type { User } from "@/entities/user/model/types/user";
 
 export interface AuthenticationSliceState {
 	user: {
@@ -21,15 +22,18 @@ const authSlice = createSlice({
 	name: "authentication",
 	initialState,
 	reducers: {
-		setUser: (state, action) => {
-			state.user = action.payload;
-			state.isAuthenticated = true;
-			state.error = null;
+		setUser: {
+			reducer: (state, action: PayloadAction<User>) => {
+				state.user = action.payload;
+			},
+			prepare: (user: User) => ({
+				payload: { ...user },
+			}),
 		},
-		setError: (state, action) => {
+		setError: (state, action: PayloadAction<string | null>) => {
 			state.error = action.payload;
 		},
-		setLoading: (state, action) => {
+		setLoading: (state, action: PayloadAction<boolean>) => {
 			state.isLoading = action.payload;
 		},
 		logout: (state) => {
@@ -39,38 +43,47 @@ const authSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addMatcher(authenticationApi.endpoints.me.matchFulfilled, (state, action) => {
-				if (action.payload.user?.id) {
-					state.user = {
-						id: action.payload.user.id,
-					};
-					state.isAuthenticated = true;
-				}
+			.addMatcher(
+				authenticationApi.endpoints.me.matchFulfilled,
+				(state, action) => {
+					if (action.payload.user?.id) {
+						state.user = {
+							id: action.payload.user.id,
+						};
+						state.isAuthenticated = true;
+					}
 
-				state.error = null;
-				state.isLoading = false;
-			})
+					state.error = null;
+					state.isLoading = false;
+				},
+			)
 			.addMatcher(authenticationApi.endpoints.me.matchPending, (state) => {
 				state.isLoading = true;
 				state.error = null;
 			})
-			.addMatcher(authenticationApi.endpoints.me.matchRejected, (state, action) => {
-				state.isLoading = false;
-				state.error = action.error?.message || "Ошибка загрузки пользователя";
-				state.isAuthenticated = false;
-				state.user = null;
-			})
+			.addMatcher(
+				authenticationApi.endpoints.me.matchRejected,
+				(state, action) => {
+					state.isLoading = false;
+					state.error = action.error?.message || "Ошибка загрузки пользователя";
+					state.isAuthenticated = false;
+					state.user = null;
+				},
+			)
 
-			.addMatcher(authenticationApi.endpoints.login.matchFulfilled, (state, action) => {
-				if (action.payload.user?.id) {
-					state.user = {
-						id: action.payload.user.id,
-					};
-					state.isAuthenticated = true;
-				}
-				state.error = null;
-				state.isLoading = false;
-			});
+			.addMatcher(
+				authenticationApi.endpoints.login.matchFulfilled,
+				(state, action) => {
+					if (action.payload.user?.id) {
+						state.user = {
+							id: action.payload.user.id,
+						};
+						state.isAuthenticated = true;
+					}
+					state.error = null;
+					state.isLoading = false;
+				},
+			);
 	},
 });
 

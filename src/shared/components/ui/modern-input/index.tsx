@@ -15,9 +15,6 @@ export const ModernInput = forwardRef<HTMLInputElement, ModernInputProps>(
 					<Icon
 						icon={icon}
 						size={20}
-						color={"var(--primary)"}
-						fill={"var(--primary)"}
-						stroke={"var(--primary)"}
 					/>
 				</div>
 			)}

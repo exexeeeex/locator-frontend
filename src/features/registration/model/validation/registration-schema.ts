@@ -3,7 +3,11 @@ import type { RegistrationFormData } from "../types";
 
 export const registrationSchema: yup.ObjectSchema<RegistrationFormData> =
 	yup.object({
-		username: yup.string().required("Укажите имя!"),
+		username: yup
+			.string()
+			.min(3, "Имя должно содержать не менее 3 символов")
+			.max(20, "Имя не должно превышать 20 символов")
+			.required("Укажите имя!"),
 		birthday: yup.date().required("Укажите дату рождения!"),
 		about: yup
 			.string()

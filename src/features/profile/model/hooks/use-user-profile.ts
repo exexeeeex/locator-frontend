@@ -1,12 +1,14 @@
-import { useGetUserProfileQuery } from "../api";
+import { useGetUserProfileQuery } from "../../../../entities/profile/api";
 
 export const useUserProfile = (userId: string) => {
-  const { data, isError, isLoading, refetch } = useGetUserProfileQuery(userId);
+	const { data, isError, isLoading, refetch, error } =
+		useGetUserProfileQuery(userId);
 
-  return {
-    profile: data,
-    isError,
-    isLoading,
-    refetchProfile: refetch,
-  };
+	return {
+		profile: data,
+		isError,
+		isLoading,
+		error,
+		refetchProfile: refetch,
+	};
 };
