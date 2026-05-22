@@ -20,8 +20,8 @@ function Button({
 			data-size={size}
 			disabled={disabled}
 			className={cn(
-				buttonVariants({ variant, size, className }),
 				"rounded-2xl",
+				buttonVariants({ variant, size, className }),
 			)}
 			{...props}
 		/>

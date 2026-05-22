@@ -3,13 +3,14 @@ import { FieldGroup } from "@/shared/components/ui/field-group";
 import { GlassCard } from "@/shared/components/ui/glass-card";
 import { ModernInput } from "@/shared/components/ui/modern-input";
 import { SectionHeader } from "@/shared/components/ui/section-header";
+import { logger } from "@/shared/lib/logger";
 import { useFormContext } from "react-hook-form";
 
 export const RegistrationStepIdentity: React.FC = () => {
 	const formContext = useFormContext<RegistrationFormData>();
 
 	if (!formContext) {
-		console.error("RegistrationStepIdentity: useFormContext returned null");
+		logger.error("RegistrationStepIdentity: useFormContext returned null");
 		return <div>Ошибка загрузки формы</div>;
 	}
 

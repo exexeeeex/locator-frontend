@@ -5,12 +5,14 @@ type Props = {
 	interests: Interest[];
 	selected?: string[];
 	onToggle?: (id: string) => void;
+	badgeClassName?: string;
 };
 
 export const InterestsList: React.FC<Props> = ({
 	interests,
 	selected,
 	onToggle,
+	badgeClassName,
 }) => {
 	return (
 		<div className='flex flex-wrap gap-2'>
@@ -34,10 +36,8 @@ export const InterestsList: React.FC<Props> = ({
 								"border border-border/50 bg-muted/40 text-muted-foreground",
 								"hover:bg-muted/80 hover:text-foreground",
 								isActive &&
-									[
-										"bg-linear-to-r from-primary to-accent backdrop-blur-3xl",
-										"text-primary-foreground border-transparent",
-									].join(" "),
+									"bg-linear-to-r from-primary to-accent backdrop-blur-3xl text-primary-foreground border-transparent",
+								badgeClassName,
 							)}
 						/>
 					</button>

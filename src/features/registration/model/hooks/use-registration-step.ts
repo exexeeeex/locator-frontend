@@ -1,30 +1,25 @@
 import { useState } from "react";
-import type { RegistrationFormData, RegistrationStep } from "../types";
-import { REGISTRATION_STEP_FIELDS } from "../config";
+import type { RegistrationStep } from "../constants/limits";
+import { nextStep, prevStep } from "../lib/stepper";
 import type { UseFormTrigger } from "react-hook-form";
+import type { RegistrationFormData } from "../types";
+import { REGISTRATION_STEP_FIELDS } from "../config";
 
 export const useRegistrationStep = (
 	trigger: UseFormTrigger<RegistrationFormData>,
 ) => {
 	const [step, setStep] = useState<RegistrationStep>("main");
 
-	const nextStep = async () => {
+	const goNext = async () => {
 		const fields = REGISTRATION_STEP_FIELDS[step];
 
-		const isValid = fields.length ? await trigger([...fields]) : true;
+		const valid = fields.length ? await trigger(fields as any) : true;
+		if (!valid) return;
 
-		if (!isValid) return;
-
-		setStep((prev) =>
-			prev === "main" ? "photo" : prev === "photo" ? "priority" : prev,
-		);
+		setStep((s) => nextStep(s));
 	};
 
-	const prevStep = () => {
-		setStep((prev) =>
-			prev === "priority" ? "photo" : prev === "photo" ? "main" : prev,
-		);
-	};
+	const goPrev = () => setStep((s) => prevStep(s));
 
-	return { step, nextStep, prevStep };
+	return { step, goNext, goPrev };
 };

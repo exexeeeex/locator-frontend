@@ -2,7 +2,7 @@ import { Icon } from "@/shared/components";
 import { Badge } from "@/shared/components/ui/badge";
 import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 type RatingBadgeProps = {
 	score: number;
@@ -62,64 +62,56 @@ export const RatingBadge: React.FC<RatingBadgeProps> = ({
 			)}
 
 			<div className='relative z-10 flex items-center gap-1.5'>
-				<AnimatePresence mode='wait'>
-					{!isExpanded ? (
+				{!isExpanded ? (
+					<motion.div
+						key='default'
+						className='flex items-center gap-1.5 whitespace-nowrap'
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -10 }}
+						transition={{ duration: 0.2 }}
+					>
+						<Icon
+							icon='star'
+							size={20}
+							className=' transition-opacity group-hover:opacity-100'
+						/>
+						{showLabel && <span>Рейтинг:</span>}
+						<span className='tabular-nums'>{percentage}%</span>
+					</motion.div>
+				) : (
+					<motion.div
+						key='expanded'
+						className='flex items-center gap-1.5 whitespace-nowrap py-0.5'
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -10 }}
+						transition={{ duration: 0.2 }}
+					>
 						<motion.div
-							key='default'
-							className='flex items-center gap-1.5 whitespace-nowrap'
-							initial={{ opacity: 0, y: 10 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: -10 }}
-							transition={{ duration: 0.2 }}
+							initial={{ rotate: -180, scale: 0 }}
+							animate={{ rotate: 0, scale: 1 }}
+							transition={{
+								duration: 0.4,
+								ease: [0.34, 1.56, 0.64, 1],
+							}}
 						>
 							<Icon
 								icon='star'
-								size={20}
-								color='currentColor'
-								fill='currentColor'
-								stroke='currentColor'
-								className='opacity-90 backdrop-blur-lg transition-opacity group-hover:opacity-100'
+								size={18}
+								className='opacity-90'
 							/>
-							{showLabel && <span>Рейтинг:</span>}
-							<span className='tabular-nums'>{percentage}%</span>
 						</motion.div>
-					) : (
-						<motion.div
-							key='expanded'
-							className='flex items-center gap-1.5 whitespace-nowrap py-0.5'
-							initial={{ opacity: 0, y: 10 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: -10 }}
-							transition={{ duration: 0.2 }}
+						<motion.span
+							className='text-[13px] font-medium'
+							initial={{ opacity: 0, x: -10 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ delay: 0.1, duration: 0.3 }}
 						>
-							<motion.div
-								initial={{ rotate: -180, scale: 0 }}
-								animate={{ rotate: 0, scale: 1 }}
-								transition={{
-									duration: 0.4,
-									ease: [0.34, 1.56, 0.64, 1],
-								}}
-							>
-								<Icon
-									icon='star'
-									size={18}
-									color='currentColor'
-									fill='none'
-									stroke='currentColor'
-									className='opacity-90'
-								/>
-							</motion.div>
-							<motion.span
-								className='text-[13px] font-medium'
-								initial={{ opacity: 0, x: -10 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ delay: 0.1, duration: 0.3 }}
-							>
-								Заполняйте профиль, чтобы повысить рейтинг!
-							</motion.span>
-						</motion.div>
-					)}
-				</AnimatePresence>
+							Заполняйте профиль, чтобы повысить рейтинг!
+						</motion.span>
+					</motion.div>
+				)}
 			</div>
 		</Badge>
 	);

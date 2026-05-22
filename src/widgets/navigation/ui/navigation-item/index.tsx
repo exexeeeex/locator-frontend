@@ -27,10 +27,7 @@ export const NavigationItem: React.FC<NavigationItemProp> = ({ link }) => {
 			<Icon
 				icon={link.icon}
 				size={20}
-				stroke='currentColor'
-				fill='none'
 				className='transition-transform duration-200'
-				color=''
 			/>
 
 			<span className='mt-0.5 text-[10px] font-medium tracking-tight'>

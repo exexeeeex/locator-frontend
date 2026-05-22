@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@shared/lib/api/store";
+import { useAppDispatch } from "@/shared/lib/api/store/store";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registrationSchema } from "../validation/registration-schema";
@@ -6,6 +6,7 @@ import { registrationThunk } from "@/features/registration";
 import type { RegistrationFormData } from "../types";
 import { notifyService } from "@shared/services";
 import { parseApiError } from "@/shared/lib/error";
+import { logger } from "@/shared/lib/logger";
 
 const { notifyError } = notifyService;
 
@@ -33,15 +34,14 @@ export const useRegistrationForm = () => {
 
 	const onSubmit = async (data: RegistrationFormData) => {
 		try {
-			const result = await dispatch(
+			await dispatch(
 				registrationThunk({
 					data,
 					files: data.files || [],
 				}),
 			);
-			console.log("Dispatch result:", result);
 		} catch (error: unknown) {
-			console.error("Registration error:", error);
+			logger.error("Registration error:", error);
 			notifyError(parseApiError(error, "Ошибка регистрации"));
 		}
 	};

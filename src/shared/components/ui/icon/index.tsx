@@ -1,35 +1,27 @@
 import { ICON_MAP } from "@/shared/lib";
 import type { IconType } from "@/shared/types";
 
-interface NavigationIconProps {
+interface IconProps {
 	icon: IconType;
-	size: number;
-	color: string;
-	fill: string;
-	stroke: string;
+	size?: number;
 	className?: string;
 }
 
-export const Icon: React.FC<NavigationIconProps> = ({
-	icon,
-	size,
-	color,
-	fill,
-	stroke,
-	className,
-}) => {
-	const IconComponent = ICON_MAP[icon];
+export const Icon: React.FC<IconProps> = ({ icon, size = 20, className }) => {
+	const emoji = ICON_MAP[icon];
 
 	return (
-		<div className='bg-transparent'>
-			<IconComponent
-				stroke={stroke}
-				className={className}
-				size={size}
-				color={color}
-				fill={fill}
-				aria-label={icon}
-			/>
-		</div>
+		<span
+			className={className}
+			style={{
+				fontSize: size,
+				lineHeight: 1,
+				display: "inline-block",
+			}}
+			role='img'
+			aria-label={icon}
+		>
+			{emoji}
+		</span>
 	);
 };

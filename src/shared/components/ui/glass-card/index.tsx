@@ -15,16 +15,16 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 }) => {
 	const variants = {
 		default: [
-			"bg-white/65 border-white/50",
-			"dark:bg-white/[0.07] dark:border-white/[0.10]",
+			"bg-white/60 border-white/50",
+			"dark:bg-white/[0.12] dark:border-white/[0.10]",
 		].join(" "),
 		elevated: [
 			"bg-white/80 border-white/60",
-			"dark:bg-white/[0.10] dark:border-white/[0.14]",
+			"dark:bg-white/[0.15] dark:border-white/[0.14]",
 		].join(" "),
 		subtle: [
-			"bg-white/40 border-white/25",
-			"dark:bg-white/[0.04] dark:border-white/[0.06]",
+			"bg-white/50 border-white/25",
+			"dark:bg-white/[0.08] dark:border-white/[0.06]",
 		].join(" "),
 	};
 
@@ -32,8 +32,13 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 		<div
 			className={cn(
 				"relative rounded-3xl border p-6",
+
 				"backdrop-blur-2xl backdrop-saturate-150",
-				"transition-all duration-300 ease-out",
+
+				"transition-colors",
+				"duration-300 ease-out",
+
+				"will-change-transform translate-z-0",
 
 				[
 					"shadow-[0_2px_16px_-4px_rgba(240,80,140,0.10),",
@@ -44,15 +49,12 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 					"0_8px_30px_-8px_rgba(160,80,200,0.10)]",
 				].join(""),
 
-				[
-					"hover:shadow-[0_4px_24px_-4px_rgba(240,80,140,0.18),",
-					"0_16px_48px_-12px_rgba(160,80,200,0.14)]",
-				].join(""),
+				["0_16px_48px_-12px_rgba(160,80,200,0.14)]"].join(""),
 				[
 					"dark:hover:shadow-[0_4px_24px_-4px_rgba(240,80,140,0.24),",
 					"0_16px_48px_-12px_rgba(160,80,200,0.18)]",
 				].join(""),
-				"hover:-translate-y-0.5",
+
 
 				variants[variant],
 

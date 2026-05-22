@@ -4,17 +4,17 @@ import type { IconType } from "@/shared/types";
 export const useProfileBody = (profile: UserProfile) => {
 	const allDetails = {
 		job: {
-			value: profile.userAdditional.job,
+			value: profile.userAdditional?.job ?? "Не указано",
 			label: "Профессия",
 			icon: "work" as IconType,
 		},
 		education: {
-			value: profile.userAdditional.education,
+			value: profile.userAdditional?.education ?? "Не указано",
 			label: "Образование",
 			icon: "education" as IconType,
 		},
 		purpose: {
-			value: profile.purpose.name,
+			value: profile.purpose?.name ?? "Не указано",
 			label: "Ищу",
 			icon: "heart" as IconType,
 		},
@@ -26,7 +26,7 @@ export const useProfileBody = (profile: UserProfile) => {
 			...data,
 		})),
 		city: profile.city,
-		region: profile.city.region,
+		region: profile.city?.region,
 		age: getUserAge(profile.birthday ?? ""),
 	};
 };

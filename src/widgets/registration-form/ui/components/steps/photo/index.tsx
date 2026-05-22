@@ -99,14 +99,14 @@ export const RegistrationStepPhoto: React.FC = () => {
 									onClick={() => handleFileRemove(file.name)}
 									type='button'
 									className='
-                      absolute right-2 top-2
-                      flex h-7 w-7 items-center justify-center rounded-full
-                      bg-red-500/80 text-white backdrop-blur-sm
-                      opacity-0 group-hover:opacity-100
-                      scale-75 group-hover:scale-100
-                      transition-all duration-200
-                      hover:bg-red-500
-                    '
+                    				  absolute right-2 top-2
+                    				  flex h-7 w-7 items-center justify-center rounded-full
+                    				  bg-red-500/80 text-white backdrop-blur-sm
+                    				  opacity-0 group-hover:opacity-100
+                    				  scale-75 group-hover:scale-100
+                    				  transition-all duration-200
+                    				  hover:bg-red-500
+                    				'
 								>
 									<X size={14} />
 								</button>
@@ -124,13 +124,13 @@ export const RegistrationStepPhoto: React.FC = () => {
 								type='button'
 								onClick={() => inputRef.current?.click()}
 								className='
-                    aspect-square rounded-2xl
-                    border-2 border-dashed border-primary/50
-                    bg-white/2 hover:bg-white/4
-                    flex items-center justify-center
-                    transition-all duration-200
-                    hover:border-primary/20
-                  '
+                  				  aspect-square rounded-2xl
+                  				  border-2 border-dashed border-primary/50
+                  				  bg-white/2 hover:bg-white/4
+                  				  flex items-center justify-center
+                  				  transition-all duration-200
+                  				  hover:border-primary/20
+                  				'
 							>
 								<Plus
 									size={24}

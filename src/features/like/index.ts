@@ -1,0 +1,1 @@
+export { useCreateInteraction } from "./model";

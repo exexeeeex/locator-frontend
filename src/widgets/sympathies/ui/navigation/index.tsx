@@ -14,7 +14,7 @@ export const SympathiesNavigation: React.FC<SympathiesNavigationProps> = ({
 	return (
 		<nav
 			className='
-        fixed top-5 left-1/2 -translate-x-1/2
+        fixed left-1/2 -translate-x-1/2
         z-50
 
         w-[calc(100%-140px)]

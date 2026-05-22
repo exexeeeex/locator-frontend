@@ -1,17 +1,23 @@
 {
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOWALL"
-        },
-        {
-          "key": "Content-Security-Policy",
-          "value": "frame-ancestors https://web.telegram.org https://*.telegram.org"
-        }
-      ]
-    }
-  ]
+	"headers": [
+		{
+			"source": "/(.*)",
+			"headers": [
+				{
+					"key": "X-Frame-Options",
+					"value": "ALLOWALL"
+				},
+				{
+					"key": "Content-Security-Policy",
+					"value": "frame-ancestors https://web.telegram.org https://*.telegram.org"
+				}
+			]
+		}
+	],
+	"rewrites": [
+		{
+			"source": "/api/(.*)",
+			"destination": "https://meetiodating.ru/api/$1"
+		}
+	]
 }

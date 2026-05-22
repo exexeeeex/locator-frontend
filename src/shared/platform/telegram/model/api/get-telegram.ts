@@ -18,6 +18,7 @@ export const getTelegram = () => {
 
 	return {
 		ready: () => {},
+		expand: () => {},
 		initData,
 		initDataUnsafe,
 

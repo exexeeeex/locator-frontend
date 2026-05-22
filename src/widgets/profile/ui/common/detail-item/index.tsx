@@ -6,12 +6,19 @@ type Props = {
 	icon: IconType;
 	title: string;
 	value: string;
+	className?: string;
 };
 
-export const DetailItem: React.FC<Props> = ({ icon, title, value }) => {
+export const DetailItem: React.FC<Props> = ({
+	icon,
+	title,
+	value,
+	className,
+}) => {
 	return (
 		<div
 			className={cn(
+				className,
 				"group relative flex w-full items-center gap-4 overflow-hidden rounded-2xl border p-4",
 				"transition-all duration-300",
 				"border border-card/30 bg-card/40 hover:bg-white/6 hover:border-white/10",
@@ -29,9 +36,6 @@ export const DetailItem: React.FC<Props> = ({ icon, title, value }) => {
 				<Icon
 					icon={icon}
 					size={22}
-					color='currentColor'
-					stroke='currentColor'
-					fill='currentColor'
 					className='text-foreground opacity-80 transition-opacity group-hover:opacity-100'
 				/>
 			</div>

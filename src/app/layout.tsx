@@ -7,6 +7,7 @@ export const Layout = () => {
 	return (
 		<section className='w-full h-full'>
 			<Outlet />
+
 			<Navigation />
 		</section>
 	);

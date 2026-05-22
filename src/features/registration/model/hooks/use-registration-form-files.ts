@@ -1,7 +1,7 @@
 import type { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import type { RegistrationFormData } from "../types";
-import { notifyService } from "@/shared/services";
-import { fileHelper } from "@/shared/lib";
+import { notifyService } from "@/shared/services/notify";
+import { fileHelper } from "@/shared/lib/helpers/file-helper";
 
 const { notifyError } = notifyService;
 const { filterNewFiles } = fileHelper;

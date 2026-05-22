@@ -1,3 +1,4 @@
+import { logger } from "@/shared/lib/logger";
 import { notifyService } from "@/shared/services";
 import { useGetCitiesByNameQuery } from "@entities/city";
 import { useDebounce } from "@shared/lib/hooks";
@@ -29,7 +30,7 @@ export const useCitySearch = () => {
 			}
 
 			notifyError(errorMessage);
-			console.error("City search error:", error);
+			logger.error("City search error:", error);
 		}
 	}, [isError, error, notifyError]);
 
