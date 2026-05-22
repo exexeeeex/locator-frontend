@@ -1,73 +1,204 @@
-# React + TypeScript + Vite
+<h1 align="center">📍 Locator</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+A modern Telegram Mini App for discovering connections and location-based networking
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+React • TypeScript • Vite • Redux Toolkit • FSD • Telegram Web App
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Overview
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+**Locator** is a Telegram Mini App that seamlessly integrates with Telegram Bot API.  
+Built with a focus on user experience and performance, it enables real-time location-based discovery and interactions directly within Telegram.
 
-## Expanding the ESLint configuration
+The application provides:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Seamless Telegram integration via Telegram Web App API
+- Responsive and performant UI with React 19
+- Type-safe development with TypeScript
+- Scalable architecture using Feature-Sliced Design (FSD)
+- Modern form handling with React Hook Form
+- Beautiful UI components powered by Radix UI and Tailwind CSS
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ⚙️ Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=react,ts,vite" />
+</p>
+
+**Frontend:**
+
+- React 19
+- TypeScript
+- Vite (ultra-fast build tool)
+- Redux Toolkit (state management)
+- React Router (routing)
+- React Hook Form (form handling)
+- Tailwind CSS (styling)
+- Radix UI (accessible components)
+- Feature-Sliced Design (FSD)
+
+**Integration:**
+
+- Telegram Web App API
+- RESTful API communication
+- Vercel deployment
+
+---
+
+## ✨ Features
+
+- ✅ Native Telegram Mini App integration
+- ✅ Real-time responsive interface
+- ✅ Form validation with Yup
+- ✅ Toast notifications (react-hot-toast, react-toastify)
+- ✅ Smooth animations (Motion)
+- ✅ Accessible UI components (Radix UI)
+- ✅ Storybook for component documentation
+- ✅ Type-safe end-to-end architecture
+- ✅ ESLint with boundaries plugin for architecture enforcement
+
+---
+
+## 🧠 Architecture
+
+The project follows **Feature-Sliced Design (FSD)** principles:
+
+```
+src/
+├── app/          # Application entry point and providers
+├── entities/     # Business entities
+├── features/     # Feature modules
+├── pages/        # Page-level components
+├── shared/       # Shared utilities and components
+└── widgets/      # Complex UI components
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Key Benefits:**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Clear layer separation and scalability
+- Enforced boundaries via ESLint
+- Easier testing and maintenance
+- Team collaboration improvements
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 📦 Getting Started
+
+### Installation
+
+```bash
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
+
+# Build for production
+yarn build
+
+# Preview production build
+yarn preview
 ```
+
+### Available Scripts
+
+```bash
+# Development
+yarn dev              # Start dev server on port 3000
+
+# Building & Deployment
+yarn build            # Build for production
+
+# Code Quality
+yarn lint             # Run ESLint
+yarn format           # Format code with Prettier
+
+# Documentation
+yarn storybook        # Start Storybook on port 6006
+yarn build-storybook  # Build Storybook for deployment
+```
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create `.env.local`:
+
+```
+VITE_API_BASE_URL=https://meetiodating.ru/api
+```
+
+### Telegram Integration
+
+The app integrates with Telegram via the Web App API:
+
+```typescript
+import { WebApp } from "@twa-dev/types";
+
+const tg = window.Telegram.WebApp;
+tg.ready();
+```
+
+---
+
+## 🎨 UI Components
+
+The project uses **Radix UI** primitives wrapped with Tailwind CSS styling.  
+Component documentation available in Storybook.
+
+### Running Storybook
+
+```bash
+yarn storybook
+```
+
+---
+
+## 🚀 Deployment
+
+The project is optimized for **Vercel** deployment with proper CSP headers for Telegram:
+
+```json
+{
+	"Content-Security-Policy": "frame-ancestors https://web.telegram.org https://*.telegram.org"
+}
+```
+
+---
+
+## 📋 Browser Support
+
+- Modern browsers with ES2020+ support
+- Telegram Web App compatible clients
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please ensure:
+
+- Code follows ESLint rules
+- TypeScript types are properly defined
+- Components are documented in Storybook
+- FSD architecture principles are maintained
+
+---
+
+## 📞 Support
+
+For issues and feature requests, please open an issue in the repository.
