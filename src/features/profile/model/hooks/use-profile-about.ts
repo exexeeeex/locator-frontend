@@ -1,23 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import {
-	profileAboutApi,
-	useUpdateAboutFieldMutation,
-} from "../../../../entities/profile/api";
+
 import { notifyService } from "@/shared/services";
+
+import { useUpdateAboutFieldMutation } from "@/entities/profile/api/profile-about.api";
 
 const { notifyLoading, notifyUpdate } = notifyService;
 
 export const useProfileAbout = () => {
-	const [open, setOpen] = useState<boolean>(false);
-	const dispatch = useDispatch();
+	const [open, setOpen] = useState(false);
 
 	const [updateAboutFieldMutation] = useUpdateAboutFieldMutation();
 
-	const schema = yup.object().shape({
+	const schema = yup.object({
 		about: yup
 			.string()
 			.min(10)
@@ -25,18 +22,28 @@ export const useProfileAbout = () => {
 			.required("Описание обязательно"),
 	});
 
-	const { register, watch } = useForm<{ about: string }>({
+	const { register, watch } = useForm<{
+		about: string;
+	}>({
 		resolver: yupResolver(schema),
-		defaultValues: { about: "" },
+
+		defaultValues: {
+			about: "",
+		},
 	});
 
 	const handleUpdateProfileAboutField = useCallback(
 		async (about: string, profileId: string) => {
-			const toastId = notifyLoading("Обновление..");
+			const toastId = notifyLoading("Обновление...");
+
 			try {
-				await updateAboutFieldMutation({ about, profileId }).unwrap();
-				dispatch(profileAboutApi.util.invalidateTags(["MyProfile", "About"]));
+				await updateAboutFieldMutation({
+					about,
+					profileId,
+				}).unwrap();
+
 				notifyUpdate(toastId, "Информация обновлена", true);
+
 				setOpen(false);
 			} catch (e: unknown) {
 				let errorMessage = "Неизвестная ошибка";
@@ -52,6 +59,7 @@ export const useProfileAbout = () => {
 				notifyUpdate(toastId, `Ошибка обновления: ${errorMessage}`, false);
 			}
 		},
+
 		[updateAboutFieldMutation],
 	);
 

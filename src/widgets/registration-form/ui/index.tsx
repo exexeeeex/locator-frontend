@@ -1,4 +1,3 @@
-// features/registration/ui/form/index.tsx
 import {
 	RegistrationStepActions,
 	useRegistrationForm,
@@ -20,7 +19,7 @@ const STEPS = [
 
 export const RegistrationForm = () => {
 	const { form, handleRegistrationSubmit } = useRegistrationForm();
-	const { step, nextStep, prevStep } = useRegistrationStep(form.trigger);
+	const { step, goNext, goPrev } = useRegistrationStep(form.trigger);
 	const currentIndex = STEPS.findIndex((s) => s.key === step);
 
 	return (
@@ -67,8 +66,8 @@ export const RegistrationForm = () => {
 
 				<RegistrationStepActions
 					step={step}
-					next={nextStep}
-					prev={prevStep}
+					next={goNext}
+					prev={goPrev}
 				/>
 			</form>
 		</FormProvider>

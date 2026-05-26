@@ -1,25 +1,30 @@
 import type { UserProfile } from "@/entities/user";
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 import { profileApi } from "./profile.api";
 
-export const profileAboutApi = createApi({
-	reducerPath: "profileAboutApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["About", "MyProfile"],
+export const profileAboutApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		updateAboutField: builder.mutation<
 			UserProfile,
-			{ about: string; profileId: string }
+			{
+				about: string;
+				profileId: string;
+			}
 		>({
 			query: ({ about, profileId }) => ({
 				url: `user-profile/about`,
+
 				method: "PATCH",
-				body: { about },
+
+				body: {
+					about,
+				},
+
 				headers: {
 					profileid: profileId,
 				},
 			}),
+
 			async onQueryStarted({ about }, { dispatch, queryFulfilled }) {
 				const patchResult = dispatch(
 					profileApi.util.updateQueryData(
@@ -30,13 +35,20 @@ export const profileAboutApi = createApi({
 						},
 					),
 				);
+
 				try {
 					await queryFulfilled;
 				} catch {
 					patchResult.undo();
 				}
 			},
-			invalidatesTags: ["MyProfile"],
+
+			invalidatesTags: [
+				{
+					type: "MyProfile",
+					id: "SELF",
+				},
+			],
 		}),
 	}),
 });

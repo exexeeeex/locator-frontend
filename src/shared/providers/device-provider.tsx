@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, type FC } from "react";
 import { Error } from "../components/ui/error";
-import { usePing } from "@/features/server-ping";
+// import { usePing } from "@/features/server-ping";
 
 type Device = "mobile" | "desktop";
 
@@ -25,7 +25,7 @@ export const DeviceProvider: FC<DeviceProviderProps> = ({
 }) => {
 	const [isMobile, setIsMobile] = useState<boolean>(true);
 	const [isRootError, setIsRootError] = useState<boolean>(false);
-	const { isError, refetch } = usePing();
+	// const { isError, refetch } = usePing();
 
 	useEffect(() => {
 		const checkRootAndWidth = () => {
@@ -50,20 +50,20 @@ export const DeviceProvider: FC<DeviceProviderProps> = ({
 		};
 	}, []);
 
-	useEffect(() => {
-		const ping = setInterval(async () => {
-			await refetch();
-		}, 5000);
+	// useEffect(() => {
+	// 	const ping = setInterval(async () => {
+	// 		await refetch();
+	// 	}, 5000);
 
-		return () => clearInterval(ping);
-	}, [isError]);
+	// 	return () => clearInterval(ping);
+	// }, [isError]);
 
 	if (!isMobile)
 		return <Error message='Use mobile device for this application' />;
 
 	if (isRootError) return <Error message='Root element is missing' />;
 
-	if (isError) return <Error message='Соединение с сервером потеряно' />;
+	// if (isError) return <Error message='Соединение с сервером потеряно' />;
 
 	if (!isRootError && isMobile)
 		return (

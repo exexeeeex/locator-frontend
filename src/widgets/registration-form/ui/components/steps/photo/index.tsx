@@ -1,28 +1,59 @@
-import {
-	useRegistrationFormFiles,
-	type RegistrationFormData,
-} from "@/features/registration";
+import { type RegistrationFormData } from "@/features/registration";
 import { useFormContext } from "react-hook-form";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Plus, ImagePlus, X } from "lucide-react";
 import { SLIDE_MOTION_PROPS } from "@shared/config";
 import { GlassCard } from "@/shared/components/ui/glass-card";
 import { SectionHeader } from "@/shared/components/ui/section-header";
 import { cn } from "@/shared/lib/utils";
 import { motion } from "framer-motion";
+import { fileHelper } from "@/shared/lib/helpers/file-helper";
+import { notifyService } from "@shared/services";
+
+const { filterNewFiles } = fileHelper;
+const { notifyError } = notifyService;
 
 export const RegistrationStepPhoto: React.FC = () => {
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const {
-		setValue,
 		watch,
+		setValue,
 		formState: { errors },
 	} = useFormContext<RegistrationFormData>();
-	const { files, handleFileChange, handleFileRemove } =
-		useRegistrationFormFiles(setValue, watch);
 
+	const files = watch("files") || [];
 	const MAX_FILES = 6;
 	const remaining = MAX_FILES - files.length;
+
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (!e.target.files) return;
+
+		const newFiles = Array.from(e.target.files);
+		const filteredNewFiles = filterNewFiles(newFiles, files);
+
+		const updatedFiles = [...files, ...filteredNewFiles].slice(0, MAX_FILES);
+
+		if (files.length + newFiles.length > MAX_FILES) {
+			notifyError(`Максимум ${MAX_FILES} фото`);
+			return;
+		}
+
+		setValue("files", updatedFiles, {
+			shouldValidate: true,
+			shouldDirty: true,
+		});
+
+		e.target.value = "";
+	};
+
+	const handleFileRemove = (fileName: string) => {
+		const updatedFiles = files.filter((file) => file.name !== fileName);
+
+		setValue("files", updatedFiles, {
+			shouldValidate: true,
+			shouldDirty: true,
+		});
+	};
 
 	return (
 		<motion.div
@@ -65,7 +96,7 @@ export const RegistrationStepPhoto: React.FC = () => {
 						</p>
 					</div>
 
-					<div className='pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 via-transparent to-fuchsia-500/5 opacity-0 transition-opacity group-hover:opacity-100' />
+					<div className='pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-r from-primary/5 via-transparent to-fuchsia-500/5 opacity-0 transition-opacity group-hover:opacity-100' />
 				</button>
 
 				{files.length > 0 && (
@@ -75,48 +106,12 @@ export const RegistrationStepPhoto: React.FC = () => {
 						className='mt-5 grid grid-cols-3 gap-3'
 					>
 						{files.map((file, i) => (
-							<motion.div
-								key={file.name + i}
-								initial={{ opacity: 0, scale: 0.8 }}
-								animate={{ opacity: 1, scale: 1 }}
-								exit={{ opacity: 0, scale: 0.8 }}
-								transition={{ delay: i * 0.05 }}
-								className='group relative aspect-square'
-							>
-								<img
-									src={URL.createObjectURL(file)}
-									alt=''
-									className='h-full w-full rounded-2xl object-cover border border-white/6'
-								/>
-
-								<div className='absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/30 transition-colors duration-200' />
-
-								<span className='absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-black/50 text-[11px] font-semibold text-white backdrop-blur-sm'>
-									{i + 1}
-								</span>
-
-								<button
-									onClick={() => handleFileRemove(file.name)}
-									type='button'
-									className='
-                    				  absolute right-2 top-2
-                    				  flex h-7 w-7 items-center justify-center rounded-full
-                    				  bg-red-500/80 text-white backdrop-blur-sm
-                    				  opacity-0 group-hover:opacity-100
-                    				  scale-75 group-hover:scale-100
-                    				  transition-all duration-200
-                    				  hover:bg-red-500
-                    				'
-								>
-									<X size={14} />
-								</button>
-
-								{i === 0 && (
-									<span className='absolute bottom-2 left-2 rounded-full bg-primary/80 px-2.5 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm'>
-										Главное
-									</span>
-								)}
-							</motion.div>
+							<PhotoCard
+								key={file.name + file.lastModified}
+								file={file}
+								index={i}
+								onRemove={handleFileRemove}
+							/>
 						))}
 
 						{remaining > 0 && (
@@ -156,6 +151,58 @@ export const RegistrationStepPhoto: React.FC = () => {
 				hidden
 				onChange={handleFileChange}
 			/>
+		</motion.div>
+	);
+};
+
+const PhotoCard: React.FC<{
+	file: File;
+	index: number;
+	onRemove: (fileName: string) => void;
+}> = ({ file, index, onRemove }) => {
+	const [imageUrl, setImageUrl] = useState<string>("");
+
+	useEffect(() => {
+		const url = URL.createObjectURL(file);
+		setImageUrl(url);
+
+		return () => URL.revokeObjectURL(url);
+	}, [file]);
+
+	if (!imageUrl) return null;
+
+	return (
+		<motion.div
+			initial={{ opacity: 0, scale: 0.8 }}
+			animate={{ opacity: 1, scale: 1 }}
+			transition={{ delay: index * 0.05 }}
+			className='group relative aspect-square'
+		>
+			<img
+				src={imageUrl}
+				alt=''
+				className='h-full w-full rounded-2xl object-cover border border-white/6'
+			/>
+
+			<div className='absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/30 transition-colors duration-200' />
+
+			<span className='absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-black/50 text-[11px] font-semibold text-white backdrop-blur-sm'>
+				{index + 1}
+			</span>
+
+			<button
+				onClick={() => onRemove(file.name)}
+				type='button'
+				className='absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-red-500/80 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-200 hover:bg-red-500'
+			>
+				<X size={14} />
+			</button>
+
+			{index === 0 && (
+				<span className='absolute bottom-2 left-2 rounded-full bg-primary/80 px-2.5 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm'>
+					Главное
+				</span>
+			)}
 		</motion.div>
 	);
 };

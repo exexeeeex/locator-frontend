@@ -13,4 +13,5 @@ export {
 	type UserProfile,
 	type User,
 	type UserInterests,
+	type UserMedia,
 } from "./types";

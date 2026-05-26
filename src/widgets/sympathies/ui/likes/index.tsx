@@ -46,7 +46,32 @@ export const SympathiesLikes = () => {
 							/>
 						))
 				) : (
-					<div className='h-full flex items-center justify-center'>
+					<motion.div
+						initial={{
+							opacity: 0,
+							y: 40,
+							scale: 0.96,
+							filter: "blur(8px)",
+						}}
+						animate={{
+							opacity: 1,
+							y: 0,
+							scale: 1,
+							filter: "blur(0px)",
+						}}
+						exit={{
+							opacity: 0,
+							y: 40,
+							scale: 0.98,
+							filter: "blur(8px)",
+						}}
+						transition={{
+							duration: 0.55,
+							delay: 0.08,
+							ease: [0.22, 1, 0.36, 1],
+						}}
+						className='h-full flex items-center justify-center'
+					>
 						<GlassCard
 							glow
 							className='mt-[35vh] flex items-center justify-center'
@@ -55,7 +80,7 @@ export const SympathiesLikes = () => {
 								Вас пока никто не лайкнул!💔
 							</h1>
 						</GlassCard>
-					</div>
+					</motion.div>
 				)}
 			</AnimatePresence>
 		</motion.div>

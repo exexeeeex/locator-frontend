@@ -10,9 +10,12 @@ import { getTelegram } from "@/shared/platform/telegram";
 export const baseQuery = fetchBaseQuery({
 	baseUrl: _apiUrl,
 	credentials: "include",
+	timeout: 15000,
 });
 
 const tg = getTelegram();
+
+let refreshPromise: Promise<void> | null = null;
 
 const baseQueryWithReauth: BaseQueryFn<
 	string | FetchArgs,
@@ -24,18 +27,32 @@ const baseQueryWithReauth: BaseQueryFn<
 	if (result?.error?.status === 401) {
 		if (!tg.initData) return result;
 
-		await baseQuery(
-			{
-				url: "authentication/telegram",
-				method: "POST",
-				body: { initData: tg.initData },
-			},
-			api,
-			extraOptions,
-		);
+		if (refreshPromise) {
+			await refreshPromise;
+			return await baseQuery(args, api, extraOptions);
+		}
+
+		refreshPromise = (async () => {
+			try {
+				await baseQuery(
+					{
+						url: "authentication/telegram",
+						method: "POST",
+						body: { initData: tg.initData },
+					},
+					api,
+					extraOptions,
+				);
+			} finally {
+				refreshPromise = null;
+			}
+		})();
+
+		await refreshPromise;
 
 		result = await baseQuery(args, api, extraOptions);
 	}
+
 	return result;
 };
 

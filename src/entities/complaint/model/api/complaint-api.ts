@@ -1,11 +1,7 @@
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
 import { type CreateComplaint, type ComplaintReason } from "../types";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
-export const complaintApi = createApi({
-	reducerPath: "complaintApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["Complaints"],
+export const complaintApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getComplaintReasons: builder.query<ComplaintReason[], void>({
 			query: () => ({
@@ -22,6 +18,5 @@ export const complaintApi = createApi({
 		}),
 	}),
 });
-
 export const { useGetComplaintReasonsQuery, useCreateComplaintMutation } =
 	complaintApi;

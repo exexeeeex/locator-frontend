@@ -1,12 +1,10 @@
-import {
-	useRegistrationMain,
-	type RegistrationFormData,
-} from "@/features/registration";
+import { type RegistrationFormData } from "@/features/registration";
 import { GlassCard } from "@/shared/components/ui/glass-card";
 import { SectionHeader } from "@/shared/components/ui/section-header";
 import { logger } from "@/shared/lib/logger";
 import { cn } from "@/shared/lib/utils";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
+import { GENDER } from "@/shared/constants/gender";
 
 export const RegistrationStepGender: React.FC = () => {
 	const formContext = useFormContext<RegistrationFormData>();
@@ -17,7 +15,14 @@ export const RegistrationStepGender: React.FC = () => {
 	}
 
 	const { control, setValue } = formContext;
-	const { isMale, isFemale } = useRegistrationMain(control);
+	const gender = useWatch({
+		control,
+		name: "gender",
+		defaultValue: GENDER.FEMALE,
+	});
+
+	const isMale = gender === GENDER.MALE;
+	const isFemale = gender === GENDER.FEMALE;
 
 	return (
 		<GlassCard>

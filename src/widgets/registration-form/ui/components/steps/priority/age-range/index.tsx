@@ -1,12 +1,9 @@
-import {
-	useRegistrationPriority,
-	type RegistrationFormData,
-} from "@/features/registration";
+import { type RegistrationFormData } from "@/features/registration";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/shared/components";
 import { GlassCard } from "@/shared/components/ui/glass-card";
 import { SectionHeader } from "@/shared/components/ui/section-header";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 const slotStyle = {
 	outline: "none",
@@ -28,7 +25,8 @@ const slotClassName = `
 
 export const RegistrationStepAgeRange: React.FC = () => {
 	const { control, setValue } = useFormContext<RegistrationFormData>();
-	const { minAge, maxAge } = useRegistrationPriority(control);
+	const minAge = useWatch({ control, name: "minAge", defaultValue: "16" });
+	const maxAge = useWatch({ control, name: "maxAge", defaultValue: "60" });
 
 	return (
 		<GlassCard>
@@ -64,7 +62,7 @@ export const RegistrationStepAgeRange: React.FC = () => {
 				</div>
 
 				<div className='flex flex-col items-center gap-1 mt-6'>
-					<div className='h-[2px] w-12 rounded-full bg-gradient-to-r from-teal-500/40 to-emerald-400/40' />
+					<div className='h-0.5 w-12 rounded-full bg-linear-to-r from-teal-500/40 to-emerald-400/40' />
 				</div>
 
 				<div className='flex flex-col items-center gap-2'>

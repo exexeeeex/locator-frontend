@@ -1,13 +1,11 @@
 import { getTelegram } from "@/shared/platform/telegram";
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
+
 import type { AuthenticationResponse } from "../types";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
 const tg = getTelegram();
 
-export const authenticationApi = createApi({
-	reducerPath: "authenticationApi",
-	baseQuery: baseQueryWithReauth,
+export const authenticationApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		login: builder.mutation<AuthenticationResponse, { initData: string }>({
 			query: () => ({

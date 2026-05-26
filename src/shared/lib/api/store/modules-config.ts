@@ -1,11 +1,25 @@
-import { authenticationApi } from "@/features/authentication";
 import type { ModuleConfig } from "./types";
+import { authenticationApi } from "@/features/authentication";
+import { registrationApi } from "@/features/registration";
+import {
+	profileApi,
+	profileAboutApi,
+	profileMediaApi,
+	profileQualityApi,
+} from "@/entities/profile/api";
+import { interactionApi } from "@/entities/interaction";
+import { complaintApi } from "@/entities/complaint/model";
+import { matchApi } from "@/entities/match";
+import { subscribeApi } from "@/entities/subscribe/api";
+import { cityApi } from "@/entities/city";
+import { interestApi } from "@/entities/interest";
+import { userPurposeApi } from "@/entities/user";
+import { userInterestsApi } from "@/entities/user/model";
+import { pingApi } from "@/features/server-ping";
 
 export const authenticationModule: ModuleConfig = {
 	apis: [authenticationApi],
 };
-
-import { registrationApi } from "@/features/registration";
 
 export const registrationModule: ModuleConfig = {
 	key: "registration",
@@ -13,21 +27,11 @@ export const registrationModule: ModuleConfig = {
 	injectOn: ["/registration"],
 };
 
-import {
-	profileApi,
-	profileAboutApi,
-	profileMediaApi,
-	profileQualityApi,
-} from "@/entities/profile/api";
-
 export const profileModule: ModuleConfig = {
 	key: "profile",
 	apis: [profileApi, profileAboutApi, profileMediaApi, profileQualityApi],
 	injectOn: ["/profile", "/profile/:id"],
 };
-
-import { interactionApi } from "@/entities/interaction";
-import { complaintApi } from "@/entities/complaint/model";
 
 export const interactionModule: ModuleConfig = {
 	key: "interaction",
@@ -35,15 +39,11 @@ export const interactionModule: ModuleConfig = {
 	injectOn: ["/", "/questionnaires"],
 };
 
-import { matchApi } from "@/entities/match";
-
 export const matchModule: ModuleConfig = {
 	key: "match",
 	apis: [matchApi],
 	injectOn: ["/", "/questionnaires"],
 };
-
-import { subscribeApi } from "@/entities/subscribe/api";
 
 export const subscribeModule: ModuleConfig = {
 	key: "subscribe",
@@ -51,19 +51,11 @@ export const subscribeModule: ModuleConfig = {
 	injectOn: ["/subscribe"],
 };
 
-import { cityApi } from "@/entities/city";
-import { interestApi } from "@/entities/interest";
-import { userPurposeApi } from "@/entities/user";
-import { userInterestsApi } from "@/entities/user/model";
-
 export const sharedDataModule: ModuleConfig = {
 	key: "sharedData",
 	apis: [cityApi, interestApi, userPurposeApi, userInterestsApi],
-
 	injectImmediately: false,
 };
-
-import { pingApi } from "@/features/server-ping";
 
 export const serverModule: ModuleConfig = {
 	key: "server",

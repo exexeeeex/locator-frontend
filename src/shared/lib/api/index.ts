@@ -1,2 +1,17 @@
 export { authenticationListener } from "./listeners";
-export { ApiModuleProvider } from "./store/api-module-provider";
+export {
+	baseApi,
+	store,
+	allModules,
+	authenticationModule,
+	matchModule,
+	coreModules,
+	lazyModules,
+	getApiMiddlewares,
+	serverModule,
+	profileModule,
+	subscribeModule,
+	interactionModule,
+	registrationModule,
+	sharedDataModule,
+} from "./store";

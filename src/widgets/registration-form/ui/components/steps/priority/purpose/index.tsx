@@ -1,12 +1,10 @@
-import {
-	useRegistrationPriority,
-	type RegistrationFormData,
-} from "@/features/registration";
+import { type RegistrationFormData } from "@/features/registration";
 import { GlassCard } from "@/shared/components/ui/glass-card";
 import { SectionHeader } from "@/shared/components/ui/section-header";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { cn } from "@/shared/lib/utils";
 import { motion } from "framer-motion";
+import { useUserPurpose } from "@/entities/user";
 
 const purposeEmojis: Record<string, string> = {
 	Общение: "💬",
@@ -17,8 +15,13 @@ const purposeEmojis: Record<string, string> = {
 
 export const RegistrationStepPurpose: React.FC = () => {
 	const { control, setValue } = useFormContext<RegistrationFormData>();
-	const { purposes, purposesFetchError, purposeId } =
-		useRegistrationPriority(control);
+	const { purposes, isError: purposesFetchError } = useUserPurpose();
+
+	const purposeId = useWatch({
+		control,
+		name: "purposeId",
+		defaultValue: purposes?.[1]?.id || "",
+	});
 
 	if (purposesFetchError) {
 		return (

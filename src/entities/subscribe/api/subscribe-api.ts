@@ -1,18 +1,14 @@
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
 import type { Subscribe } from "../types/subscribe";
 import type { UserSubscribe } from "../types/user-subscribe";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
-export const subscribeApi = createApi({
-	reducerPath: "subscribeApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["Subscribe"],
+export const subscribeApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getAllPlans: builder.query<Subscribe[], void>({
 			query: () => ({
 				url: `subscribe/get-all-plans`,
 			}),
-			providesTags: ["Subscribe"],
+			providesTags: ["Subscribes"],
 			keepUnusedDataFor: 3000,
 		}),
 		getPlanById: builder.query<Subscribe, string>({

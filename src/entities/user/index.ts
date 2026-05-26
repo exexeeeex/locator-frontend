@@ -6,6 +6,7 @@ export {
 	type RegistrationRequest,
 	type UserProfile,
 	type UserInterests,
+	type UserMedia,
 } from "./model";
 export {
 	userPurposeApi,

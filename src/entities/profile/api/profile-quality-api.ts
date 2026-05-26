@@ -1,10 +1,6 @@
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
-export const profileQualityApi = createApi({
-	reducerPath: "profileQualityApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["ProfileQuality", "MyProfile"],
+export const profileQualityApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getProfileQuality: builder.query<number, string>({
 			query: (profileId: string) => ({
@@ -16,5 +12,4 @@ export const profileQualityApi = createApi({
 		}),
 	}),
 });
-
 export const { useGetProfileQualityQuery } = profileQualityApi;

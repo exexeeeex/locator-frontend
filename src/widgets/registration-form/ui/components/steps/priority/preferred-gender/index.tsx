@@ -1,15 +1,16 @@
-import {
-	useRegistrationPriority,
-	type RegistrationFormData,
-} from "@/features/registration";
+import { type RegistrationFormData } from "@/features/registration";
 import { GlassCard } from "@/shared/components/ui/glass-card";
 import { SectionHeader } from "@/shared/components/ui/section-header";
 import { cn } from "@/shared/lib/utils";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 export const RegistrationStepPreferredGender: React.FC = () => {
 	const { control, setValue } = useFormContext<RegistrationFormData>();
-	const { preferredGender } = useRegistrationPriority(control);
+	const preferredGender = useWatch({
+		control,
+		name: "preferredGender",
+		defaultValue: "male",
+	});
 
 	const options = [
 		{

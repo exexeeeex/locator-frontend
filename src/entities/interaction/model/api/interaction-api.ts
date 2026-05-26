@@ -1,16 +1,11 @@
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
 import type { LikeResponse } from "../types/like-response";
 import { InteractionType } from "../types";
 import { userDataService } from "@/entities/user";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
 const { getProfileId } = userDataService;
 
-export const interactionApi = createApi({
-	reducerPath: "interactionApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["Interactions"],
-	keepUnusedDataFor: 300,
+export const interactionApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getInteractionsToMe: builder.query<LikeResponse[], void>({
 			query: () => ({

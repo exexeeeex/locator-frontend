@@ -1,15 +1,11 @@
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
 import type { UserPurpose } from "..";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
-export const userPurposeApi = createApi({
-	reducerPath: "userPurposeApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["Purpose", "Interests"],
+export const userPurposeApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getUserPurposes: builder.query<UserPurpose[], void>({
 			query: () => "user-purpose/get-all",
-			providesTags: ["Purpose"],
+			providesTags: ["UserPurpose"],
 		}),
 	}),
 });

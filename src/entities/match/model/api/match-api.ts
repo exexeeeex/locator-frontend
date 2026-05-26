@@ -1,13 +1,8 @@
 import { type LikeResponse } from "@/entities/interaction/model/types/like-response";
 import { type UserProfile } from "@/entities/user";
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
-export const matchApi = createApi({
-	reducerPath: "matchApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["Matches", "Candidates"],
-	keepUnusedDataFor: 300,
+export const matchApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getMatches: builder.query<LikeResponse[], void>({
 			query: () => ({

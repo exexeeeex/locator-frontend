@@ -82,7 +82,7 @@ export const RatingBadge: React.FC<RatingBadgeProps> = ({
 				) : (
 					<motion.div
 						key='expanded'
-						className='flex items-center gap-1.5 whitespace-nowrap py-0.5'
+						className='flex items-center gap-1.5 text-wrap whitespace-wrap py-0.5'
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -10 }}

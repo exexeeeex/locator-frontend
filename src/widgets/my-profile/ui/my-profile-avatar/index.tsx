@@ -1,15 +1,16 @@
 import { profileApi, useMyProfile } from "@/features/profile";
-import { Icon } from "@/shared/components";
+import {
+	Icon,
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/shared/components";
 import { MyProfileAvatarModal } from "..";
 import { useState } from "react";
 import { useAppSelector } from "@/shared/lib";
 import { useSubscribe } from "@/features/subscribe/model/hooks";
 import { cn } from "@/shared/lib/utils";
-import {
-	HoverCard,
-	HoverCardContent,
-	HoverCardTrigger,
-} from "@/shared/components/ui/hover-card";
+
 import { Link } from "react-router-dom";
 
 export const MyProfileAvatar: React.FC = () => {
@@ -37,8 +38,8 @@ export const MyProfileAvatar: React.FC = () => {
 				  relative
       			'
 			>
-				<HoverCard>
-					<HoverCardTrigger asChild>
+				<Popover>
+					<PopoverTrigger asChild>
 						<div
 							className={cn(
 								userSubscribe
@@ -88,9 +89,9 @@ export const MyProfileAvatar: React.FC = () => {
 								className='text-white'
 							/>
 						</div>
-					</HoverCardTrigger>
+					</PopoverTrigger>
 
-					<HoverCardContent
+					<PopoverContent
 						sideOffset={12}
 						className='
 							w-72
@@ -218,8 +219,8 @@ export const MyProfileAvatar: React.FC = () => {
 								</button>
 							</Link>
 						</div>
-					</HoverCardContent>
-				</HoverCard>
+					</PopoverContent>
+				</Popover>
 				<img
 					src={avatar() || undefined}
 					alt='user-avatar'

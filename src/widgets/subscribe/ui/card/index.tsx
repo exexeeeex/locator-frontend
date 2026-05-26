@@ -21,7 +21,7 @@ export const SubscribeCard = memo<SubscribeCardProps>(
 		return (
 			<GlassCard
 				glow={isPremium}
-				className='relative  overflow-hidden select-none p-6'
+				className='relative h-full flex flex-col justify-between overflow-hidden select-none p-6'
 			>
 				<div
 					className={cn(

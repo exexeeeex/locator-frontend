@@ -1,12 +1,8 @@
-import baseQueryWithReauth from "@/shared/lib/api/base-query";
-import { createApi } from "@reduxjs/toolkit/query/react";
 import type { UserInterests } from "../..";
 import type { Interest } from "@/entities/interest";
+import { baseApi } from "@/shared/lib/api/store/base-api";
 
-export const userInterestsApi = createApi({
-	reducerPath: "userInterestsApi",
-	baseQuery: baseQueryWithReauth,
-	tagTypes: ["Interests"],
+export const userInterestsApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getUserInterests: builder.query<Interest[], string>({
 			query: (userId: string) =>
@@ -14,7 +10,7 @@ export const userInterestsApi = createApi({
 			transformResponse: (response: UserInterests[]) => {
 				return (response ?? []).map((u) => u.userInterest);
 			},
-			providesTags: ["Interests"],
+			providesTags: ["UserInterests"],
 		}),
 	}),
 });

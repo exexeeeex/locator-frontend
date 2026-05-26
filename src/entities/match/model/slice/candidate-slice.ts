@@ -13,3 +13,4 @@ export const candidateSlice = createSlice({
 });
 
 export const { incremented } = candidateSlice.actions;
+export default candidateSlice.reducer;

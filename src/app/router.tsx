@@ -1,13 +1,50 @@
 import { Layout } from "./layout";
 import { createBrowserRouter } from "react-router-dom";
-import { RegistrationPage } from "@/pages/registration";
+
+import { lazy, Suspense } from "react";
 import { PublicRouteProvider } from "@/shared/providers";
-import { MyProfilePage } from "@/pages/my-profile";
-import { SympathiesPage } from "@/pages/sympathies/ui";
 import { NotFound } from "@/widgets/not-found";
-import { UserProfilePage } from "@/pages/user-profile";
-import { SubscribePage } from "@/pages/subscribe";
-import { QuestionnairesPage } from "@/pages/questionnaires";
+import { Loader } from "@/shared/components/ui/loader";
+
+const RegistrationPage = lazy(() =>
+	import("@/pages/registration").then((module) => ({
+		default: module.RegistrationPage,
+	})),
+);
+
+const QuestionnairesPage = lazy(() =>
+	import("@/pages/questionnaires").then((module) => ({
+		default: module.QuestionnairesPage,
+	})),
+);
+
+const MyProfilePage = lazy(() =>
+	import("@/pages/my-profile").then((module) => ({
+		default: module.MyProfilePage,
+	})),
+);
+
+const UserProfilePage = lazy(() =>
+	import("@/pages/user-profile").then((module) => ({
+		default: module.UserProfilePage,
+	})),
+);
+
+const SympathiesPage = lazy(() =>
+	import("@/pages/sympathies").then((module) => ({
+		default: module.SympathiesPage,
+	})),
+);
+
+const SubscribePage = lazy(() =>
+	import("@/pages/subscribe").then((module) => ({
+		default: module.SubscribePage,
+	})),
+);
+
+const withSuspense = (component: React.ReactNode) => (
+	<Suspense fallback={<Loader />}>{component}</Suspense>
+);
 
 export const router = createBrowserRouter([
 	{
@@ -16,8 +53,8 @@ export const router = createBrowserRouter([
 		errorElement: <NotFound />,
 		children: [
 			{
-				path: "/",
-				element: <QuestionnairesPage />,
+				index: true,
+				element: withSuspense(<QuestionnairesPage />),
 			},
 			{
 				path: "/registration",
@@ -29,19 +66,19 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/profile",
-				element: <MyProfilePage />,
+				element: withSuspense(<MyProfilePage />),
 			},
 			{
 				path: "/profile/:id",
-				element: <UserProfilePage />,
+				element: withSuspense(<UserProfilePage />),
 			},
 			{
 				path: "/sympathies",
-				element: <SympathiesPage />,
+				element: withSuspense(<SympathiesPage />),
 			},
 			{
 				path: "/questionnaires",
-				element: <QuestionnairesPage />,
+				element: withSuspense(<QuestionnairesPage />),
 			},
 			{
 				path: "/subscribe",
